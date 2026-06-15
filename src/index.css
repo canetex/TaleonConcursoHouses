@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --color-tibia-gold: #c9a227;
+  --color-tibia-dark: #1a1208;
+  --color-tibia-panel: #2d2318;
+  --color-tibia-accent: #8b6914;
+  --color-tibia-green: #4a7c3f;
+  --color-tibia-red: #8b2e2e;
+}
+
+body {
+  @apply bg-tibia-dark text-amber-50 min-h-screen;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
