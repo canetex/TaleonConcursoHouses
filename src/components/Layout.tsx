@@ -37,6 +37,7 @@ export function Layout() {
             <Link to="/" className={nav_link_class('/')}>Início</Link>
             <Link to="/inscrever" className={nav_link_class('/inscrever')}>Inscrever</Link>
             <Link to="/votar" className={nav_link_class('/votar')}>Votar</Link>
+            <Link to="/regras" className={nav_link_class('/regras')}>Regras</Link>
             <Link to="/ranking" className={nav_link_class('/ranking')}>Ranking</Link>
             {is_admin(discord_id, admin_ids) && (
               <Link to="/admin" className={nav_link_class('/admin')}>Admin</Link>

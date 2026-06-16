@@ -44,6 +44,12 @@ export function HomePage() {
           Mostre a sua criatividade no servidor <strong>Taleon — San</strong>!
           Inscreva a sua casa, conquiste votos da comunidade e dispute prémios incríveis.
         </p>
+        <Link
+          to="/regras"
+          className="inline-block mt-4 text-sm text-tibia-gold hover:underline"
+        >
+          Consultar regras completas do concurso →
+        </Link>
 
         {!phase_loading && (
           <div className="mt-6 inline-flex flex-col items-center gap-2">
