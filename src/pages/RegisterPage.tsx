@@ -6,6 +6,7 @@ import { usePhase } from '../hooks/usePhase'
 import { can_register } from '../lib/phases'
 import { validate_character } from '../lib/character'
 import { normalize_image_url, resolve_image_url } from '../lib/images'
+import { TaleonSanLink, TheCrustyLink } from '../lib/links'
 import type { HouseRegistrationForm } from '../types'
 
 const empty_form: HouseRegistrationForm = {
@@ -164,7 +165,8 @@ export function RegisterPage() {
     <div className="max-w-2xl mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold text-tibia-gold mb-2">Inscrever Casa</h2>
       <p className="text-sm text-amber-200/50 mb-6">
-        Taxa de inscrição: <strong className="text-amber-200">10 TC (Tibia Coins)</strong> transferidas para The Crusty.
+        Taxa de inscrição: <strong className="text-amber-200">10 TC (Tibia Coins)</strong> transferidas para{' '}
+        <TheCrustyLink className="text-amber-200 font-semibold" />.
         A inscrição ficará pendente até confirmação do pagamento.
       </p>
 
@@ -192,7 +194,9 @@ export function RegisterPage() {
             </button>
           </div>
           {character_valid === true && (
-            <p className="text-xs text-green-400 mt-1">✓ Personagem válido no Taleon — San</p>
+            <p className="text-xs text-green-400 mt-1">
+              ✓ Personagem válido no <TaleonSanLink className="text-green-400" />
+            </p>
           )}
           {character_valid === false && (
             <p className="text-xs text-red-400 mt-1">✗ Personagem não encontrado</p>

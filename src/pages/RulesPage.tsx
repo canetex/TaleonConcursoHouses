@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { usePhase } from '../hooks/usePhase'
+import { TaleonSanLink, TheCrustyLink } from '../lib/links'
 
 function SectionCard({
   icon,
@@ -40,8 +41,8 @@ export function RulesPage() {
         </h2>
         <p className="text-amber-200/70 max-w-2xl mx-auto">
           Edital oficial do Concurso de Decoração de Houses do servidor{' '}
-          <strong className="text-amber-100">Taleon — San</strong>, organizado por{' '}
-          <strong className="text-tibia-gold">The Crusty</strong>. Preparem os vossos
+          <TaleonSanLink className="text-amber-100 font-semibold" />, organizado por{' '}
+          <TheCrustyLink className="text-tibia-gold font-semibold" />. Preparem os vossos
           itens raros, organizem as tapeçarias e mostrem a criatividade à comunidade!
         </p>
       </header>
@@ -123,7 +124,7 @@ export function RulesPage() {
               <strong className="text-amber-100">Taxa de Inscrição:</strong> Para validar a
               participação, é cobrada uma taxa de{' '}
               <strong className="text-tibia-gold">10 TC (Tibia Coins)</strong>, transferida
-              para o organizador (<strong>The Crusty</strong>). A inscrição ficará pendente
+              para o organizador (<TheCrustyLink className="text-amber-100 font-semibold" />). A inscrição ficará pendente
               até confirmação do recebimento durante os 2 dias de validação. Todo o montante
               arrecadado será adicionado à premiação final!
             </li>
@@ -232,7 +233,7 @@ export function RulesPage() {
                 <li className="flex gap-2">
                   <span className="text-tibia-gold">•</span>
                   <span>
-                    A comissão organizadora (liderada por <strong>The Crusty</strong>)
+                    A comissão organizadora (liderada por <TheCrustyLink className="text-amber-100 font-semibold" />)
                     avalia harmonia, criatividade e arranjo de itens.
                   </span>
                 </li>
@@ -339,7 +340,7 @@ export function RulesPage() {
                 <strong className="text-amber-100">Validação de Personagem:</strong> Tanto
                 para inscrever uma casa quanto para votar, o utilizador deve introduzir o
                 nome de um personagem ativo. O sistema validará automaticamente se o
-                personagem existe na base de dados oficial do Taleon — San.
+                personagem existe na base de dados oficial do <TaleonSanLink className="text-amber-200/80" />.
               </span>
             </li>
           </ul>

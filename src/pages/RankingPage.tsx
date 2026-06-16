@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import { usePhase } from '../hooks/usePhase'
 import { is_admin } from '../lib/auth'
+import { TheCrustyLink } from '../lib/links'
 import { Leaderboard } from '../components/Leaderboard'
 import type { House, LeaderboardEntry } from '../types'
 
@@ -127,7 +128,9 @@ export function AdminPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold text-tibia-gold mb-2">Painel Admin</h2>
-      <p className="text-sm text-amber-200/50 mb-6">The Crusty · Validação de Pagamentos</p>
+      <p className="text-sm text-amber-200/50 mb-6">
+        <TheCrustyLink className="text-amber-200/50" /> · Validação de Pagamentos
+      </p>
 
       <section className="mb-10">
         <h3 className="text-lg font-semibold text-amber-100 mb-4">

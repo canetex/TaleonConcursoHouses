@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth'
 import { usePhase } from '../hooks/usePhase'
 import { phase_labels } from '../lib/phases'
 import { is_admin, format_discord_avatar } from '../lib/auth'
+import { TaleonSanLink, TheCrustyLink } from '../lib/links'
 
 export function Layout() {
   const { is_authenticated, discord_id, discord_session, login, logout } = useAuth()
@@ -38,7 +39,9 @@ export function Layout() {
               <h1 className="text-lg font-bold text-tibia-gold leading-tight">
                 Concurso de Decoração
               </h1>
-              <p className="text-xs text-amber-200/60">Taleon — San · The Crusty</p>
+              <p className="text-xs text-amber-200/60">
+                <TaleonSanLink className="text-amber-200/60" /> · <TheCrustyLink className="text-amber-200/60" />
+              </p>
             </div>
           </Link>
 
@@ -89,7 +92,8 @@ export function Layout() {
       </main>
 
       <footer className="border-t border-amber-900/40 bg-tibia-panel/50 py-4 text-center text-xs text-amber-200/50">
-        Organizado por <strong className="text-tibia-gold">The Crusty</strong> · Taleon — San
+        Organizado por <TheCrustyLink className="text-tibia-gold font-semibold" /> ·{' '}
+        <TaleonSanLink className="text-amber-200/50" />
       </footer>
     </div>
   )

@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { HouseCarousel } from '../components/HouseCarousel'
 import { usePhase } from '../hooks/usePhase'
 import { phase_descriptions, phase_labels } from '../lib/phases'
+import { TaleonSanLink } from '../lib/links'
 import type { House } from '../types'
 
 export function HomePage() {
@@ -41,7 +42,7 @@ export function HomePage() {
           Concurso de Decoração de Houses
         </h2>
         <p className="text-amber-200/70 max-w-2xl mx-auto">
-          Mostre a sua criatividade no servidor <strong>Taleon — San</strong>!
+          Mostre a sua criatividade no servidor <TaleonSanLink className="text-amber-100 font-semibold" />!
           Inscreva a sua casa, conquiste votos da comunidade e dispute prémios incríveis.
         </p>
         <Link

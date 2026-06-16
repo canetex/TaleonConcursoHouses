@@ -5,6 +5,7 @@ import { can_vote } from '../lib/phases'
 import { validate_character } from '../lib/character'
 import { supabase } from '../lib/supabase'
 import { SwipeCard } from '../components/SwipeCard'
+import { TaleonSanLink } from '../lib/links'
 import type { House, VoteType } from '../types'
 
 export function VotePage() {
@@ -122,7 +123,7 @@ export function VotePage() {
         </div>
 
         <label className="block text-sm text-amber-200/70 mb-1">
-          Nome do seu Personagem (Taleon — San) *
+          Nome do seu Personagem (<TaleonSanLink className="text-amber-200/70" />) *
         </label>
         <div className="flex gap-2 mb-4">
           <input
@@ -146,7 +147,9 @@ export function VotePage() {
           <p className="text-xs text-green-400">✓ Personagem válido! A iniciar votação...</p>
         )}
         {character_valid === false && (
-          <p className="text-xs text-red-400">✗ Personagem não encontrado no Taleon — San</p>
+          <p className="text-xs text-red-400">
+            ✗ Personagem não encontrado no <TaleonSanLink className="text-red-400" />
+          </p>
         )}
       </div>
     )
