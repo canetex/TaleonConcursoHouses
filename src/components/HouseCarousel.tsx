@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { House } from '../types'
+import { ImageWithFallback } from './ImageWithFallback'
 
 interface HouseCarouselProps {
   houses: House[]
@@ -27,7 +28,7 @@ export function HouseCarousel({ houses }: HouseCarouselProps) {
       <div className="bg-tibia-panel rounded-2xl border border-amber-800/30 overflow-hidden shadow-xl">
         {house.screenshot_urls[0] ? (
           <div className="aspect-video bg-black/40 relative">
-            <img
+            <ImageWithFallback
               src={house.screenshot_urls[0]}
               alt={house.custom_name}
               className="w-full h-full object-cover"

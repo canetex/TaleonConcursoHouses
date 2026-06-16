@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { ImageWithFallback } from '../components/ImageWithFallback'
 import type { House, LeaderboardEntry } from '../types'
 
 export function HouseDetailPage() {
@@ -53,7 +54,7 @@ export function HouseDetailPage() {
       <div className="bg-tibia-panel rounded-2xl border border-amber-800/30 overflow-hidden">
         {images.length > 0 ? (
           <div className="aspect-video relative bg-black/40">
-            <img
+            <ImageWithFallback
               src={images[image_index]}
               alt={house.custom_name}
               className="w-full h-full object-cover"

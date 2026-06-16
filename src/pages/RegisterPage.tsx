@@ -267,33 +267,40 @@ export function RegisterPage() {
 
         <div>
           <label className="block text-sm text-amber-200/70 mb-1">URLs de Screenshots *</label>
+          <p className="text-xs text-amber-200/40 mb-2">
+            Use o <strong>link direto da imagem</strong> (termina em .png, .jpg, .gif). No Imgur,
+            clique com o botão direito na foto → &quot;Copiar endereço da imagem&quot;.
+          </p>
           {form.screenshot_urls.map((url, i) => (
-            <div key={i} className="flex gap-2 mb-2">
-              <input
-                type="url"
-                value={url}
-                onChange={(e) => {
-                  const urls = [...form.screenshot_urls]
-                  urls[i] = e.target.value
-                  update_field('screenshot_urls', urls)
-                }}
-                placeholder="https://i.imgur.com/..."
-                className="flex-1 px-3 py-2 rounded-lg bg-tibia-dark border border-amber-800/40 text-amber-50 focus:outline-none focus:border-tibia-gold"
-              />
-              {form.screenshot_urls.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    update_field(
-                      'screenshot_urls',
-                      form.screenshot_urls.filter((_, idx) => idx !== i),
-                    )
-                  }
-                  className="px-3 py-2 rounded-lg bg-tibia-red/60 text-amber-50 text-sm"
-                >
-                  ✕
-                </button>
-              )}
+            <div key={i} className="mb-3">
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  value={url}
+                  onChange={(e) => {
+                    const urls = [...form.screenshot_urls]
+                    urls[i] = e.target.value
+                    update_field('screenshot_urls', urls)
+                  }}
+                  placeholder="https://i.imgur.com/exemplo.png"
+                  className="flex-1 px-3 py-2 rounded-lg bg-tibia-dark border border-amber-800/40 text-amber-50 focus:outline-none focus:border-tibia-gold"
+                />
+                {form.screenshot_urls.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      update_field(
+                        'screenshot_urls',
+                        form.screenshot_urls.filter((_, idx) => idx !== i),
+                      )
+                    }
+                    className="px-3 py-2 rounded-lg bg-tibia-red/60 text-amber-50 text-sm"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+              <ScreenshotPreview url={url} />
             </div>
           ))}
           <button
@@ -319,6 +326,51 @@ export function RegisterPage() {
           {submitting ? 'A enviar...' : 'Submeter Inscrição'}
         </button>
       </form>
+    </div>
+  )
+}
+
+function ScreenshotPreview({ url }: { url: string }) {
+  const trimmed = url.trim()
+  const [status, set_status] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle')
+
+  useEffect(() => {
+    if (!trimmed) {
+      set_status('idle')
+      return
+    }
+    set_status('loading')
+  }, [trimmed])
+
+  if (!trimmed) return null
+
+  return (
+    <div className="mt-2">
+      {status === 'error' ? (
+        <p className="text-xs text-red-400">
+          ✗ Não foi possível carregar esta imagem. Verifique se é o link direto (.png/.jpg) e está acessível publicamente.
+        </p>
+      ) : (
+        <div className="relative inline-block">
+          <img
+            src={trimmed}
+            alt="Pré-visualização"
+            onLoad={() => set_status('ok')}
+            onError={() => set_status('error')}
+            className={`max-h-40 rounded-lg border border-amber-800/40 object-contain bg-black/40 ${
+              status === 'ok' ? 'opacity-100' : 'opacity-0 h-0'
+            }`}
+          />
+          {status === 'loading' && (
+            <p className="text-xs text-amber-200/50">A carregar pré-visualização...</p>
+          )}
+          {status === 'ok' && (
+            <span className="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-green-700/80 text-green-50 text-[10px]">
+              ✓ carregada
+            </span>
+          )}
+        </div>
+      )}
     </div>
   )
 }
