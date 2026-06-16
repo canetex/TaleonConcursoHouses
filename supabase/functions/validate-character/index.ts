@@ -2,12 +2,31 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const CHARACTER_PROFILE_URL = "https://san.taleon.online/characterprofile.php";
 
-const INVALID_MARKERS = [
-  "Character does not exist",
+// Campos presentes apenas no perfil de um personagem existente.
+// A pagina de personagem inexistente cai no layout generico do site e nao contem nenhum destes.
+const CHARACTER_DATA_MARKERS = [
+  "vocation",
+  "experience",
+  "residence",
+  "sex:",
+  "account status",
+];
+
+// Numero minimo de marcadores de dados necessarios para considerar o personagem valido.
+const MIN_DATA_MARKERS = 3;
+
+// Mensagens explicitas de personagem inexistente (defesa adicional caso o site mude o layout).
+const NOT_FOUND_MARKERS = [
   "character does not exist",
   "does not exist",
-  "error",
+  "could not be found",
+  "character not found",
 ];
+
+const json_headers = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
+};
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
@@ -26,7 +45,7 @@ Deno.serve(async (req: Request) => {
     if (!character_name || typeof character_name !== "string") {
       return new Response(
         JSON.stringify({ valid: false, error: "character_name is required" }),
-        { status: 400, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } },
+        { status: 400, headers: json_headers },
       );
     }
 
@@ -34,7 +53,7 @@ Deno.serve(async (req: Request) => {
     if (trimmed.length < 2 || trimmed.length > 64) {
       return new Response(
         JSON.stringify({ valid: false }),
-        { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } },
+        { headers: json_headers },
       );
     }
 
@@ -45,25 +64,30 @@ Deno.serve(async (req: Request) => {
 
     const html = await response.text();
     const lower_html = html.toLowerCase();
-    const is_invalid = INVALID_MARKERS.some((marker) =>
-      lower_html.includes(marker.toLowerCase())
-    ) || html.length < 500;
 
-    const has_character_data =
-      lower_html.includes("level") ||
-      lower_html.includes("vocation") ||
-      lower_html.includes("experience");
+    const explicitly_not_found = NOT_FOUND_MARKERS.some((marker) =>
+      lower_html.includes(marker)
+    );
 
-    const valid = !is_invalid && has_character_data;
+    // O(n) sobre o numero de marcadores (constante pequena).
+    const data_marker_hits = CHARACTER_DATA_MARKERS.reduce(
+      (count, marker) => (lower_html.includes(marker) ? count + 1 : count),
+      0,
+    );
+
+    const valid =
+      response.ok &&
+      !explicitly_not_found &&
+      data_marker_hits >= MIN_DATA_MARKERS;
 
     return new Response(
       JSON.stringify({ valid, character_name: trimmed }),
-      { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } },
+      { headers: json_headers },
     );
   } catch (error) {
     return new Response(
       JSON.stringify({ valid: false, error: String(error) }),
-      { status: 500, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } },
+      { status: 500, headers: json_headers },
     );
   }
 });
