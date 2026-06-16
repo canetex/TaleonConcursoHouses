@@ -35,6 +35,16 @@ export function ended_phase_config() {
   ]
 }
 
+function config_to_dates(config: ReturnType<typeof registration_phase_config>) {
+  const map = Object.fromEntries(config.map((row) => [row.key, row.value]))
+  return {
+    registration_start: map.registration_start,
+    registration_end: map.registration_end,
+    validation_end: map.validation_end,
+    voting_end: map.voting_end,
+  }
+}
+
 /** Relógio do cliente manipulado para dentro da inscrição (bypass UI) */
 export async function inject_fake_clock(page: Page, iso_date: string) {
   const fixed = new Date(iso_date).getTime()
@@ -88,6 +98,22 @@ interface MockOptions {
   house_override?: Partial<typeof MOCK_HOUSE>
 }
 
+function phase_payload(options: MockOptions) {
+  const phase = options.phase ?? 'registration'
+  const config =
+    phase === 'voting'
+      ? voting_phase_config()
+      : phase === 'ended'
+        ? ended_phase_config()
+        : registration_phase_config()
+
+  return {
+    phase,
+    dates: config_to_dates(config),
+    admin_ids: ['434506189951205396'],
+  }
+}
+
 export async function setup_supabase_mocks(page: Page, options: MockOptions = {}) {
   const config =
     options.phase === 'voting'
@@ -95,6 +121,7 @@ export async function setup_supabase_mocks(page: Page, options: MockOptions = {}
       : options.phase === 'ended'
         ? ended_phase_config()
         : registration_phase_config()
+  const contest_phase = phase_payload(options)
 
   await page.route('**/*', async (route) => {
     const url = route.request().url()
@@ -173,6 +200,14 @@ export async function setup_supabase_mocks(page: Page, options: MockOptions = {}
 
     if (url.includes('/rest/v1/house_leaderboard')) {
       return route.fulfill({ status: 200, contentType: 'application/json', body: '[]' })
+    }
+
+    if (url.includes('/functions/v1/get-contest-phase')) {
+      return route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(contest_phase),
+      })
     }
 
     if (url.includes('/functions/v1/upsert-house')) {

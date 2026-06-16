@@ -1,7 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { get_current_phase } from '../lib/phases'
 import type { ContestDates, ContestPhase } from '../types'
+
+interface ContestPhaseResponse {
+  phase: ContestPhase
+  dates: ContestDates
+  admin_ids: string[]
+}
+
+function merge_admin_ids(db_admin_ids: string[]): string[] {
+  const env_admins =
+    (import.meta.env.VITE_ADMIN_DISCORD_IDS as string | undefined)
+      ?.split(',')
+      .map((id) => id.trim())
+      .filter(Boolean) ?? []
+  return [...new Set([...env_admins, ...db_admin_ids])]
+}
 
 export function usePhase() {
   const [dates, set_dates] = useState<ContestDates | null>(null)
@@ -9,64 +23,28 @@ export function usePhase() {
   const [admin_ids, set_admin_ids] = useState<string[]>([])
   const [loading, set_loading] = useState(true)
 
-  useEffect(() => {
-    async function load_config() {
-      const { data, error } = await supabase.from('contest_config').select('key, value')
+  const load_phase = useCallback(async () => {
+    const { data, error } = await supabase.functions.invoke<ContestPhaseResponse>('get-contest-phase')
 
-      if (error) {
-        console.error('Failed to load contest config:', error)
-        set_loading(false)
-        return
-      }
-
-      const config_map = Object.fromEntries((data ?? []).map((r) => [r.key, r.value]))
-      const contest_dates: ContestDates = {
-        registration_start: config_map.registration_start ?? new Date().toISOString(),
-        registration_end: config_map.registration_end ?? new Date().toISOString(),
-        validation_end: config_map.validation_end ?? new Date().toISOString(),
-        voting_end: config_map.voting_end ?? new Date().toISOString(),
-      }
-
-      const env_admins = (import.meta.env.VITE_ADMIN_DISCORD_IDS as string | undefined)
-        ?.split(',')
-        .map((id) => id.trim())
-        .filter(Boolean) ?? []
-
-      const db_admins = (config_map.admin_discord_ids ?? '')
-        .split(',')
-        .map((id: string) => id.trim())
-        .filter(Boolean)
-
-      console.log('[usePhase] contest_config loaded', {
-        registration_start: contest_dates.registration_start,
-        registration_end: contest_dates.registration_end,
-        validation_end: contest_dates.validation_end,
-        voting_end: contest_dates.voting_end,
-        env_admins,
-        db_admins,
-      })
-
-      const merged_admins = [...new Set([...env_admins, ...db_admins])]
-      console.log('[usePhase] merged admin_ids', merged_admins)
-
-      set_dates(contest_dates)
-      set_phase(get_current_phase(contest_dates))
-      set_admin_ids(merged_admins)
+    if (error || !data?.dates || !data.phase) {
+      console.error('Failed to load contest phase:', error ?? data)
       set_loading(false)
+      return
     }
 
-    load_config()
+    set_dates(data.dates)
+    set_phase(data.phase)
+    set_admin_ids(merge_admin_ids(data.admin_ids ?? []))
+    set_loading(false)
   }, [])
 
   useEffect(() => {
-    if (!dates) return
-
+    void load_phase()
     const interval = setInterval(() => {
-      set_phase(get_current_phase(dates))
+      void load_phase()
     }, 60_000)
-
     return () => clearInterval(interval)
-  }, [dates])
+  }, [load_phase])
 
   return { dates, phase, admin_ids, loading }
 }

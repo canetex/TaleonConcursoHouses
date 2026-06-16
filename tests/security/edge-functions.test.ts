@@ -20,6 +20,7 @@ describe('S05 — edge functions do projeto', () => {
     'resolve-image-url',
     'house-wiki-coords',
     'validate-character',
+    'get-contest-phase',
   ]
 
   for (const fn_name of [...secured_functions, ...public_functions]) {

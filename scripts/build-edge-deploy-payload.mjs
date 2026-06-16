@@ -39,6 +39,7 @@ const verify_jwt_false = new Set([
   'update-profile',
   'get-my-votes',
   'admin-update-house',
+  'get-contest-phase',
 ])
 
 console.log(

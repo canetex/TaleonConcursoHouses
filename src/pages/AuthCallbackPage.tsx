@@ -1,12 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { complete_discord_auth } from '../lib/auth'
+import { useAuth } from '../hooks/useAuth'
 
 export function AuthCallbackPage() {
   const navigate = useNavigate()
+  const { apply_discord_session } = useAuth()
   const [error, set_error] = useState<string | null>(null)
+  const handled_ref = useRef(false)
 
   useEffect(() => {
+    if (handled_ref.current) return
+    handled_ref.current = true
+
     const params = new URLSearchParams(window.location.search)
     const code = params.get('code')
     const oauth_error = params.get('error')
@@ -21,14 +27,15 @@ export function AuthCallbackPage() {
       return
     }
 
-    complete_discord_auth(code).then((session) => {
+    void complete_discord_auth(code).then((session) => {
       if (session) {
+        apply_discord_session(session)
         navigate('/', { replace: true })
       } else {
         set_error('Não foi possível concluir o login com Discord.')
       }
     })
-  }, [navigate])
+  }, [navigate, apply_discord_session])
 
   if (error) {
     return (

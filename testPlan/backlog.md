@@ -17,7 +17,7 @@ Legenda de severidade: 🔴 Crítico · 🟠 Alto · 🟡 Médio · 🟢 Baixo /
 | P3 | 4 | UX / melhorias não bloqueantes | ✅ Concluído |
 | — | 4 | Sem ação (comportamento já seguro) | — |
 
-**Suíte:** 75/75 testes passando (`test:unit` 32 · `test:security` 26 · `test:e2e` 17)
+**Suíte:** 77/77 testes passando (`test:unit` 32 · `test:security` 27 · `test:e2e` 18)
 
 ---
 
@@ -108,10 +108,21 @@ Legenda de severidade: 🔴 Crítico · 🟠 Alto · 🟡 Médio · 🟢 Baixo /
 
 ## Pendência operacional
 
-| Item | Ação |
-|------|------|
-| `CONTEST_SESSION_SECRET` | Configurar em Supabase Dashboard → Edge Functions → Secrets (obrigatório para login real) |
+| Item | Status |
+|------|--------|
+| `CONTEST_SESSION_SECRET` | ✅ Configurado |
+| Deploy frontend (auth + fase server-side) | Push em `main` dispara GitHub Actions |
 
 ---
 
-*Backlog P0–P3 implementado em 2026-06-17.*
+## Fase 4 — Correções pós-deploy ✅
+
+| Item | Mitigação |
+|------|-----------|
+| Login duplo (OAuth callback) | `AuthProvider` + `apply_discord_session()` |
+| E-S10 / E-S11 bypass UI | Edge Function `get-contest-phase` + `usePhase` refatorado |
+| L07 | E2E `auth-callback.spec.ts` |
+
+---
+
+*Backlog P0–P3 + fase 4 implementados em 2026-06-17.*

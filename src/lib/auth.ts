@@ -1,5 +1,5 @@
 import { supabase } from './supabase'
-import { clear_discord_session, set_discord_session, type DiscordSession } from './session'
+import { clear_discord_session, type DiscordSession } from './session'
 import { invoke_with_session } from './contest-api'
 import type { ContestUser } from '../types'
 
@@ -69,7 +69,11 @@ export async function sign_in_with_discord(): Promise<void> {
 export async function complete_discord_auth(code: string): Promise<DiscordSession | null> {
   const redirect_uri = get_auth_callback_url()
   const code_verifier = sessionStorage.getItem(PKCE_VERIFIER_KEY)
-  sessionStorage.removeItem(PKCE_VERIFIER_KEY)
+
+  if (!code_verifier) {
+    console.error('Discord auth failed: PKCE verifier ausente (sessão expirada ou callback duplicado)')
+    return null
+  }
 
   const { data, error } = await supabase.functions.invoke('discord-auth', {
     body: { code, redirect_uri, code_verifier },
@@ -80,15 +84,14 @@ export async function complete_discord_auth(code: string): Promise<DiscordSessio
     return null
   }
 
-  const session = {
+  sessionStorage.removeItem(PKCE_VERIFIER_KEY)
+
+  return {
     discord_id: data.discord_id as string,
     discord_username: (data.discord_username as string | null) ?? null,
     discord_avatar: (data.discord_avatar as string | null) ?? null,
     session_token: (data.session_token as string | undefined) ?? undefined,
   }
-
-  set_discord_session(session)
-  return session
 }
 
 export async function sign_out(): Promise<void> {

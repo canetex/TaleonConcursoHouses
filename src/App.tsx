@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './hooks/useAuth'
 import { Layout } from './components/Layout'
 import { HomePage } from './pages/HomePage'
 import { RegisterPage } from './pages/RegisterPage'
@@ -11,6 +12,7 @@ import { LoginPage } from './pages/LoginPage'
 
 export default function App() {
   return (
+    <AuthProvider>
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || undefined}>
       <Routes>
         <Route element={<Layout />}>
@@ -26,5 +28,6 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </AuthProvider>
   )
 }

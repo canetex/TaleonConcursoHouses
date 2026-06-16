@@ -1,7 +1,7 @@
 # Status dos Testes — Taleon Concurso Houses
 
 **Data:** 2026-06-17  
-**Fase:** 3 — Correções de segurança (P0–P3)  
+**Fase:** 4 — Auth + fase server-side  
 **Pasta de testes:** `/tests/`
 
 ---
@@ -12,8 +12,8 @@
 |-------|--------|--------|------|-------|
 | Unitários (Vitest) | 32 | 0 | 0 | 32 |
 | Segurança (Vitest) | **26** | 0 | 0 | 26 |
-| E2E (Playwright) | **17** | 0 | 0 | 17 |
-| **Total** | **75** | **0** | **0** | **75** |
+| E2E (Playwright) | **18** | 0 | 0 | 18 |
+| **Total** | **77** | **0** | **0** | **77** |
 
 Todas as vulnerabilidades documentadas na fase 2 foram mitigadas via migration RLS + Edge Functions com sessão HMAC.
 
@@ -34,7 +34,7 @@ Todas as vulnerabilidades documentadas na fase 2 foram mitigadas via migration R
 | **S18** | 🔴 Crítico | ✅ Resolvida | REVOKE UPDATE em `contest_users` + `update-profile` |
 | **S04** | 🟠 Alto | ✅ Resolvida | `admin-update-house` valida admin server-side |
 | **S13** | 🟡 Médio | ✅ Resolvida | Allowlist Imgur em `validation.ts` + `images.ts` |
-| **E-S10/E-S11** | 🟡 Médio | ⚠️ UI only | Bypass de relógio no browser documentado; API bloqueada server-side |
+| **E-S10/E-S11** | 🟡 Médio | ✅ Resolvida | `get-contest-phase` calcula fase no servidor; UI não confia no relógio do browser |
 
 ### Comportamentos seguros confirmados
 
@@ -83,8 +83,9 @@ Inclui fase 1 (U01–U11, S01/S03/S04) + fase 2:
 | G01–G08 | Rotas públicas e protegidas | ✅ |
 | L01–L06 | Fluxos logado + admin | ✅ |
 | L03, L04 | Inscrição/edição via `upsert-house` | ✅ |
-| E-S10 | Relógio manipulado → formulário visível (UI) | ✅ |
-| E-S11 | Relógio manipulado → UI de votação (UI) | ✅ |
+| L07 | Callback OAuth aplica sessão no primeiro login | ✅ |
+| E-S10 | Relógio manipulado → inscrição bloqueada (fase servidor) | ✅ |
+| E-S11 | Relógio manipulado → votação bloqueada (fase servidor) | ✅ |
 | E-S12 | SVG malicioso não dispara dialog | ✅ |
 
 ---
@@ -109,8 +110,9 @@ node tests/security/probes/s14-votes-select-all.mjs
 | Item | Status |
 |------|--------|
 | Migration `20260617120000_security_hardening.sql` | ✅ Aplicada |
-| Edge Functions (6 novas/atualizadas) | Ver deploy |
-| Secret `CONTEST_SESSION_SECRET` | ⚠️ Configurar no Supabase Dashboard → Edge Functions → Secrets |
+| Edge Functions (6 novas/atualizadas) | ✅ Deployadas |
+| `get-contest-phase` | ✅ Fase calculada no servidor |
+| Secret `CONTEST_SESSION_SECRET` | ✅ Configurado pelo utilizador |
 
 ---
 
