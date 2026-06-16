@@ -1,6 +1,7 @@
 export const TIBIA_MAP_MIN_X = 31744
 export const TIBIA_MAP_MIN_Y = 30976
 export const TIBIA_MAP_PIXEL_SIZE = 1792
+export const TIBIA_MAP_PREVIEW_ZOOM = 2
 
 export function get_tibia_floor_map_url(z: number): string {
   const floor = Math.max(0, Math.min(15, z))
@@ -15,7 +16,7 @@ export function coords_to_map_pixel(x: number, y: number): { px: number; py: num
 }
 
 export function get_tibiamaps_external_url(x: number, y: number, z: number): string {
-  return `https://tibiamaps.io/map#${x},${y},${z}:2`
+  return `https://tibiamaps.io/map#${x},${y},${z}:${TIBIA_MAP_PREVIEW_ZOOM}`
 }
 
 export function get_tibiawiki_map_url(x: number, y: number, z: number): string {

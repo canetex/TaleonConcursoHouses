@@ -4,6 +4,7 @@ import {
   get_tibiawiki_map_url,
   get_tibiamaps_external_url,
   TIBIA_MAP_PIXEL_SIZE,
+  TIBIA_MAP_PREVIEW_ZOOM,
 } from '../lib/tibia-map'
 
 interface HouseMinimapProps {
@@ -19,6 +20,8 @@ export function HouseMinimap({ x, y, z, house_name, wiki_url }: HouseMinimapProp
   const floor_map_url = get_tibia_floor_map_url(z)
   const tibiawiki_map_url = get_tibiawiki_map_url(x, y, z)
   const tibiamaps_url = get_tibiamaps_external_url(x, y, z)
+  const map_scale = TIBIA_MAP_PREVIEW_ZOOM
+  const map_size = TIBIA_MAP_PIXEL_SIZE * map_scale
 
   return (
     <div className="rounded-xl border border-amber-800/30 overflow-hidden bg-tibia-dark/60">
@@ -39,10 +42,10 @@ export function HouseMinimap({ x, y, z, house_name, wiki_url }: HouseMinimapProp
           draggable={false}
           className="absolute max-w-none pointer-events-none select-none"
           style={{
-            width: TIBIA_MAP_PIXEL_SIZE,
-            height: TIBIA_MAP_PIXEL_SIZE,
-            left: `calc(50% - ${px}px)`,
-            top: `calc(50% - ${py}px)`,
+            width: map_size,
+            height: map_size,
+            left: `calc(50% - ${px * map_scale}px)`,
+            top: `calc(50% - ${py * map_scale}px)`,
           }}
         />
         <span

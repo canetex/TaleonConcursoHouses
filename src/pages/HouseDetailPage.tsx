@@ -19,7 +19,9 @@ export function HouseDetailPage() {
         supabase.from('house_leaderboard').select('*').eq('id', id).maybeSingle(),
       ])
 
-      if (house_res.data) set_house(house_res.data)
+      if (house_res.data && house_res.data.status !== 'rejected') {
+        set_house(house_res.data)
+      }
       if (lb_res.data) set_leaderboard_entry(lb_res.data)
       set_loading(false)
     }

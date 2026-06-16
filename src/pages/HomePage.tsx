@@ -18,6 +18,7 @@ export function HomePage() {
       const { data, error } = await supabase
         .from('houses')
         .select('*')
+        .neq('status', 'rejected')
         .order('created_at', { ascending: false })
 
       if (!error && data) set_houses(data)
@@ -44,7 +45,7 @@ export function HomePage() {
             <img
               src={CONTEST_LOGO_URL}
               alt={CONTEST_LOGO_ALT}
-              className="contest-logo mx-auto w-44 sm:w-56 max-w-full mb-5 drop-shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
+              className="contest-logo-hero mx-auto w-56 sm:w-72 md:w-80 max-w-full mb-5 drop-shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
             />
             <h2 className="text-2xl sm:text-3xl font-bold text-brand-cream mb-4 text-balance leading-tight">
               Concurso de Decoração de Houses
