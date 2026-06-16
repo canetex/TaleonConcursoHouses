@@ -38,7 +38,7 @@ export function Layout() {
             <img
               src={CONTEST_LOGO_URL}
               alt={CONTEST_LOGO_ALT}
-              className="h-11 w-11 sm:h-12 sm:w-12 shrink-0 object-contain drop-shadow-md"
+              className="contest-logo h-11 w-11 sm:h-12 sm:w-12 shrink-0 drop-shadow-md"
             />
             <div className="min-w-0 hidden sm:block">
               <h1 className="text-lg font-bold text-brand-cream leading-tight truncate">

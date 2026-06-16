@@ -20,7 +20,7 @@ export function LoginPage() {
       <img
         src={CONTEST_LOGO_URL}
         alt={CONTEST_LOGO_ALT}
-        className="mx-auto w-36 sm:w-44 max-w-full object-contain mb-6 drop-shadow-[0_6px_20px_rgba(0,0,0,0.4)]"
+        className="contest-logo mx-auto w-36 sm:w-44 max-w-full mb-6 drop-shadow-[0_6px_20px_rgba(0,0,0,0.4)]"
       />
       <h2 className="text-2xl font-bold text-tibia-gold mb-3">Entrar no Concurso</h2>
       <p className="text-amber-200/70 mb-8">

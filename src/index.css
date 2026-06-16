@@ -63,3 +63,8 @@ body {
   background: color-mix(in srgb, var(--color-brand-brandy) 50%, var(--color-brand-black));
   color: var(--color-brand-smoke);
 }
+
+.contest-logo {
+  border-radius: 50%;
+  object-fit: cover;
+}

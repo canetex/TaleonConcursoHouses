@@ -44,7 +44,7 @@ export function HomePage() {
             <img
               src={CONTEST_LOGO_URL}
               alt={CONTEST_LOGO_ALT}
-              className="mx-auto w-44 sm:w-56 max-w-full object-contain mb-5 drop-shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
+              className="contest-logo mx-auto w-44 sm:w-56 max-w-full mb-5 drop-shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
             />
             <h2 className="text-2xl sm:text-3xl font-bold text-brand-cream mb-4 text-balance leading-tight">
               Concurso de Decoração de Houses

@@ -1,3 +1,11 @@
+import {
+  coords_to_map_pixel,
+  get_tibia_floor_map_url,
+  get_tibiawiki_map_url,
+  get_tibiamaps_external_url,
+  TIBIA_MAP_PIXEL_SIZE,
+} from '../lib/tibia-map'
+
 interface HouseMinimapProps {
   x: number
   y: number
@@ -7,8 +15,10 @@ interface HouseMinimapProps {
 }
 
 export function HouseMinimap({ x, y, z, house_name, wiki_url }: HouseMinimapProps) {
-  const tibiawiki_map_url = `https://www.tibiawiki.com.br/wiki/mapa#${x},${y},${z}:6:1`
-  const tibiamaps_url = `https://tibiamaps.io/map#${x},${y},${z}:2`
+  const { px, py } = coords_to_map_pixel(x, y)
+  const floor_map_url = get_tibia_floor_map_url(z)
+  const tibiawiki_map_url = get_tibiawiki_map_url(x, y, z)
+  const tibiamaps_url = get_tibiamaps_external_url(x, y, z)
 
   return (
     <div className="rounded-xl border border-amber-800/30 overflow-hidden bg-tibia-dark/60">
@@ -18,16 +28,37 @@ export function HouseMinimap({ x, y, z, house_name, wiki_url }: HouseMinimapProp
           X: {x} Y: {y} Z: {z}
         </span>
       </div>
-      <div className="relative h-52 bg-black/30">
-        <iframe
-          title={house_name ? `Mapa de ${house_name}` : 'Mapa da casa'}
-          src={tibiamaps_url}
-          className="w-full h-full border-0"
-          loading="lazy"
-          referrerPolicy="no-referrer"
+      <div
+        className="relative h-52 overflow-hidden bg-[#1a1814] isolate"
+        aria-label={house_name ? `Mapa de ${house_name}` : 'Mapa da casa'}
+      >
+        <img
+          src={floor_map_url}
+          alt=""
+          aria-hidden
+          draggable={false}
+          className="absolute max-w-none pointer-events-none select-none"
+          style={{
+            width: TIBIA_MAP_PIXEL_SIZE,
+            height: TIBIA_MAP_PIXEL_SIZE,
+            left: `calc(50% - ${px}px)`,
+            top: `calc(50% - ${py}px)`,
+          }}
+        />
+        <span
+          className="absolute left-1/2 top-1/2 z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-500 ring-2 ring-white shadow-md"
+          aria-hidden
         />
       </div>
-      <div className="flex gap-3 px-3 py-2 text-xs">
+      <div className="flex flex-wrap gap-3 px-3 py-2 text-xs">
+        <a
+          href={tibiamaps_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-tibia-gold hover:underline"
+        >
+          Abrir no TibiaMaps
+        </a>
         <a
           href={tibiawiki_map_url}
           target="_blank"

@@ -17,7 +17,7 @@ export function HouseImagePlaceholder({ label, subtitle, className }: HouseImage
         src={HOUSE_IMAGE_PLACEHOLDER_URL}
         alt=""
         aria-hidden
-        className="absolute inset-0 h-full w-full scale-110 object-cover blur-lg brightness-[0.55] saturate-90"
+        className="absolute inset-0 h-full w-full scale-110 object-cover blur-sm brightness-[0.55] saturate-90"
       />
       <div className="absolute inset-0 bg-brand-black/45" />
       <div className="relative z-10 flex h-full min-h-[inherit] flex-col items-center justify-center gap-2 p-6 text-center">
