@@ -1,5 +1,5 @@
 /**
- * Gera src/data/tibia-houses.json a partir da TibiaData API.
+ * Gera src/data/tibia-houses.json a partir da TibiaData API + Fandom Wiki (fallback).
  * Executar: node scripts/generate-tibia-houses.mjs
  */
 
@@ -45,15 +45,22 @@ async function fetch_houses(town) {
   return data.houses?.house_list ?? []
 }
 
-async function fetch_guildhalls_from_fandom(city) {
-  const category = `Category:${city.replace(/ /g, '_')}_Guildhalls`
-  const url = `https://tibia.fandom.com/api.php?action=query&list=categorymembers&cmtitle=${encodeURIComponent(category)}&cmlimit=500&format=json`
+async function fetch_fandom_category_members(category_title) {
+  const url = `https://tibia.fandom.com/api.php?action=query&list=categorymembers&cmtitle=${encodeURIComponent(category_title)}&cmlimit=500&format=json`
   const res = await fetch(url)
   if (!res.ok) return []
   const data = await res.json()
-  return (data.query?.categorymembers ?? [])
-    .filter((entry) => entry.ns === 0)
-    .map((entry) => entry.title)
+  return (data.query?.categorymembers ?? []).filter((entry) => entry.ns === 0).map((entry) => entry.title)
+}
+
+async function fetch_houses_from_fandom(city) {
+  const category = `Category:${city.replace(/ /g, '_')}_Houses`
+  return fetch_fandom_category_members(category)
+}
+
+async function fetch_guildhalls_from_fandom(city) {
+  const category = `Category:${city.replace(/ /g, '_')}_Guildhalls`
+  return fetch_fandom_category_members(category)
 }
 
 const catalog = []
@@ -70,8 +77,9 @@ for (const town of TOWNS) {
   const { api, city } = town
   console.log(`Fetching ${city}...`)
 
-  const [houses, guildhall_names] = await Promise.all([
+  const [houses, fandom_houses, guildhall_names] = await Promise.all([
     fetch_houses(api),
+    fetch_houses_from_fandom(city),
     fetch_guildhalls_from_fandom(city),
   ])
 
@@ -83,6 +91,16 @@ for (const town of TOWNS) {
       wiki_slug: to_wiki_slug(house.name),
       wiki_url: to_wiki_url(house.name),
       size: house.size,
+    })
+  }
+
+  for (const house_name of fandom_houses) {
+    add_entry({
+      name: house_name,
+      city,
+      type: 'house',
+      wiki_slug: to_wiki_slug(house_name),
+      wiki_url: to_wiki_url(house_name),
     })
   }
 
@@ -107,3 +125,9 @@ const out_path = path.join(process.cwd(), 'src', 'data', 'tibia-houses.json')
 fs.mkdirSync(path.dirname(out_path), { recursive: true })
 fs.writeFileSync(out_path, JSON.stringify(catalog, null, 2))
 console.log(`Wrote ${catalog.length} entries to ${out_path}`)
+
+const by_type = catalog.reduce((acc, e) => {
+  acc[e.type] = (acc[e.type] || 0) + 1
+  return acc
+}, {})
+console.log('By type:', by_type)

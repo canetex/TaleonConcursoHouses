@@ -15,6 +15,7 @@ import {
   get_houses_by_city,
 } from '../lib/tibia-houses-catalog'
 import { fetch_house_coords } from '../lib/tibia-houses'
+import { HouseSearchSelect } from '../components/HouseSearchSelect'
 import type { House, HouseRegistrationForm } from '../types'
 
 const empty_form: HouseRegistrationForm = {
@@ -29,8 +30,6 @@ const empty_form: HouseRegistrationForm = {
   hirelings_count: 0,
   screenshot_urls: [''],
 }
-
-const cities = get_cities()
 
 const status_labels: Record<House['status'], string> = {
   pending: 'Pendente',
@@ -68,6 +67,7 @@ export function RegisterPage() {
 
   const is_editing = !!existing_house
 
+  const available_cities = get_cities(form.house_type)
   const available_houses = form.house_city
     ? get_houses_by_city(form.house_city, form.house_type)
     : []
@@ -336,8 +336,13 @@ export function RegisterPage() {
             <select
               value={form.house_type}
               onChange={(e) => {
-                update_field('house_type', e.target.value as 'house' | 'guildhall')
+                const new_type = e.target.value as 'house' | 'guildhall'
+                update_field('house_type', new_type)
                 update_field('house_tibia_name', '')
+                const valid_cities = get_cities(new_type)
+                if (form.house_city && !valid_cities.includes(form.house_city)) {
+                  update_field('house_city', '')
+                }
               }}
               className="w-full px-3 py-2 rounded-lg bg-tibia-dark border border-amber-800/40 text-amber-50 focus:outline-none focus:border-tibia-gold"
             >
@@ -357,7 +362,7 @@ export function RegisterPage() {
               required
             >
               <option value="">Selecione a cidade</option>
-              {cities.map((city) => (
+              {available_cities.map((city) => (
                 <option key={city} value={city}>
                   {city}
                 </option>
@@ -369,22 +374,17 @@ export function RegisterPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm text-amber-200/70 mb-1">Casa / Guildhall *</label>
-            <select
+            <HouseSearchSelect
+              houses={available_houses}
               value={form.house_tibia_name}
-              onChange={(e) => update_field('house_tibia_name', e.target.value)}
-              className="w-full px-3 py-2 rounded-lg bg-tibia-dark border border-amber-800/40 text-amber-50 focus:outline-none focus:border-tibia-gold"
-              required
+              on_change={(house_name) => update_field('house_tibia_name', house_name)}
               disabled={!form.house_city}
-            >
-              <option value="">
-                {form.house_city ? 'Selecione a casa' : 'Selecione a cidade primeiro'}
-              </option>
-              {available_houses.map((house) => (
-                <option key={house.wiki_slug} value={house.name}>
-                  {house.name}
-                </option>
-              ))}
-            </select>
+              placeholder={
+                form.house_city
+                  ? `Pesquisar ${form.house_type === 'guildhall' ? 'guildhall' : 'casa'}...`
+                  : 'Selecione a cidade primeiro'
+              }
+            />
             <p className="text-[10px] text-amber-200/40 mt-1">
               Lista baseada no{' '}
               <a

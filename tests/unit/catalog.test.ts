@@ -14,6 +14,15 @@ describe('tibia-houses-catalog', () => {
     expect(cities).toEqual([...cities].sort((a, b) => a.localeCompare(b)))
   })
 
+  it('U11: filtra cidades por tipo', () => {
+    const house_cities = get_cities('house')
+    const guild_cities = get_cities('guildhall')
+    expect(house_cities).toContain('Thais')
+    expect(guild_cities).toContain('Thais')
+    expect(house_cities).toContain("Ab'Dendriel")
+    expect(get_houses_by_city("Ab'Dendriel", 'house').length).toBeGreaterThan(0)
+  })
+
   it('U11: filtra casas por cidade e tipo', () => {
     const houses = get_houses_by_city('Thais', 'house')
     expect(houses.length).toBeGreaterThan(0)

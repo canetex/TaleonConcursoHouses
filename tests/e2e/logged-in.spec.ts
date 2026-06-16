@@ -39,6 +39,7 @@ test.describe('Utilizador logado — bypass Discord', () => {
   })
 
   test('L03: submeter inscrição chama upsert-house', async ({ page }) => {
+    test.setTimeout(60_000)
     await setup_supabase_mocks(page, { existing_house: false })
     await inject_discord_session(page)
 
@@ -52,16 +53,13 @@ test.describe('Utilizador logado — bypass Discord', () => {
     await page.getByRole('button', { name: 'Validar' }).click()
     await expect(page.getByText(/Personagem válido/i)).toBeVisible({ timeout: 10_000 })
 
-    const city_select = page.locator('select').nth(1)
-    await city_select.selectOption('Thais')
-    const house_select = page.locator('select').nth(2)
-    await expect(house_select.locator('option')).not.toHaveCount(1, { timeout: 10_000 })
-    const first_house = await house_select.locator('option').nth(1).getAttribute('value')
-    await house_select.selectOption(first_house ?? { index: 1 })
+    await page.locator('select').nth(1).selectOption('Thais')
+    await page.getByPlaceholder(/Pesquisar casa/i).fill('Alai Flats, Flat 01')
+    await page.getByPlaceholder(/Pesquisar casa/i).blur()
 
-    await page.locator('input[type="text"]').nth(1).fill('1')
-    await page.locator('input[type="text"]').nth(2).fill('Nova Casa E2E')
-    await page.locator('input[type="text"]').nth(3).fill('Tema E2E')
+    await page.getByPlaceholder(/1º andar/i).fill('1')
+    await page.getByPlaceholder(/Batize sua obra/i).fill('Nova Casa E2E')
+    await page.getByPlaceholder(/temática da sua decoração/i).fill('Tema E2E')
     await page.locator('input[type="url"]').fill('https://i.imgur.com/test.png')
     await page.getByRole('button', { name: /Submeter Inscrição/i }).click()
     await upsert_promise

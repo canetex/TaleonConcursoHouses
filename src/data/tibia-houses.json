@@ -14,6 +14,384 @@
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Castle_of_the_Winds"
   },
   {
+    "name": "Coastwood 1",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Coastwood_1",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Coastwood_1"
+  },
+  {
+    "name": "Coastwood 10",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Coastwood_10",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Coastwood_10"
+  },
+  {
+    "name": "Coastwood 2",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Coastwood_2",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Coastwood_2"
+  },
+  {
+    "name": "Coastwood 3",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Coastwood_3",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Coastwood_3"
+  },
+  {
+    "name": "Coastwood 4",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Coastwood_4",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Coastwood_4"
+  },
+  {
+    "name": "Coastwood 5",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Coastwood_5",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Coastwood_5"
+  },
+  {
+    "name": "Coastwood 6 (Shop)",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Coastwood_6_(Shop)",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Coastwood_6_(Shop)"
+  },
+  {
+    "name": "Coastwood 7",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Coastwood_7",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Coastwood_7"
+  },
+  {
+    "name": "Coastwood 8",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Coastwood_8",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Coastwood_8"
+  },
+  {
+    "name": "Coastwood 9",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Coastwood_9",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Coastwood_9"
+  },
+  {
+    "name": "Great Willow 1",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_1",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_1"
+  },
+  {
+    "name": "Great Willow 1a",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_1a",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_1a"
+  },
+  {
+    "name": "Great Willow 1b",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_1b",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_1b"
+  },
+  {
+    "name": "Great Willow 1c",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_1c",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_1c"
+  },
+  {
+    "name": "Great Willow 2a",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_2a",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_2a"
+  },
+  {
+    "name": "Great Willow 2b",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_2b",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_2b"
+  },
+  {
+    "name": "Great Willow 2c",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_2c",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_2c"
+  },
+  {
+    "name": "Great Willow 2d",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_2d",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_2d"
+  },
+  {
+    "name": "Great Willow 3a",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_3a",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_3a"
+  },
+  {
+    "name": "Great Willow 3b",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_3b",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_3b"
+  },
+  {
+    "name": "Great Willow 3c",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_3c",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_3c"
+  },
+  {
+    "name": "Great Willow 3d",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_3d",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_3d"
+  },
+  {
+    "name": "Great Willow 4a",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_4a",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_4a"
+  },
+  {
+    "name": "Great Willow 4b",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_4b",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_4b"
+  },
+  {
+    "name": "Great Willow 4c",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_4c",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_4c"
+  },
+  {
+    "name": "Great Willow 4d",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_4d",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_4d"
+  },
+  {
+    "name": "Great Willow Western Wing",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Great_Willow_Western_Wing",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Great_Willow_Western_Wing"
+  },
+  {
+    "name": "Mangrove 1",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Mangrove_1",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Mangrove_1"
+  },
+  {
+    "name": "Mangrove 2",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Mangrove_2",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Mangrove_2"
+  },
+  {
+    "name": "Mangrove 3",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Mangrove_3",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Mangrove_3"
+  },
+  {
+    "name": "Mangrove 4",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Mangrove_4",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Mangrove_4"
+  },
+  {
+    "name": "Prima Arbor",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Prima_Arbor",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Prima_Arbor"
+  },
+  {
+    "name": "Shadow Caves 1",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_1",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_1"
+  },
+  {
+    "name": "Shadow Caves 11",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_11",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_11"
+  },
+  {
+    "name": "Shadow Caves 12",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_12",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_12"
+  },
+  {
+    "name": "Shadow Caves 13",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_13",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_13"
+  },
+  {
+    "name": "Shadow Caves 14",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_14",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_14"
+  },
+  {
+    "name": "Shadow Caves 15",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_15",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_15"
+  },
+  {
+    "name": "Shadow Caves 16",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_16",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_16"
+  },
+  {
+    "name": "Shadow Caves 17",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_17",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_17"
+  },
+  {
+    "name": "Shadow Caves 18",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_18",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_18"
+  },
+  {
+    "name": "Shadow Caves 2",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_2",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_2"
+  },
+  {
+    "name": "Shadow Caves 21",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_21",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_21"
+  },
+  {
+    "name": "Shadow Caves 22",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_22",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_22"
+  },
+  {
+    "name": "Shadow Caves 23",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_23",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_23"
+  },
+  {
+    "name": "Shadow Caves 24",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_24",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_24"
+  },
+  {
+    "name": "Shadow Caves 25",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_25",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_25"
+  },
+  {
+    "name": "Shadow Caves 26",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_26",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_26"
+  },
+  {
+    "name": "Shadow Caves 27",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_27",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_27"
+  },
+  {
+    "name": "Shadow Caves 28",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_28",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_28"
+  },
+  {
+    "name": "Shadow Caves 3",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_3",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_3"
+  },
+  {
+    "name": "Shadow Caves 4",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_4",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_4"
+  },
+  {
+    "name": "Shadow Caves 5",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_5",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_5"
+  },
+  {
+    "name": "Shadow Caves 6",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Shadow_Caves_6",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Shadow_Caves_6"
+  },
+  {
     "name": "Shadow Towers",
     "city": "Ab'Dendriel",
     "type": "guildhall",
@@ -26,6 +404,167 @@
     "type": "guildhall",
     "wiki_slug": "The_Hideout",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/The_Hideout"
+  },
+  {
+    "name": "Treetop 1",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_1",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_1"
+  },
+  {
+    "name": "Treetop 10",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_10",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_10"
+  },
+  {
+    "name": "Treetop 11",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_11",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_11"
+  },
+  {
+    "name": "Treetop 12 (Shop)",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_12_(Shop)",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_12_(Shop)"
+  },
+  {
+    "name": "Treetop 13",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_13",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_13"
+  },
+  {
+    "name": "Treetop 2",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_2",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_2"
+  },
+  {
+    "name": "Treetop 3 (Shop)",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_3_(Shop)",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_3_(Shop)"
+  },
+  {
+    "name": "Treetop 4 (Shop)",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_4_(Shop)",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_4_(Shop)"
+  },
+  {
+    "name": "Treetop 5 (Shop)",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_5_(Shop)",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_5_(Shop)"
+  },
+  {
+    "name": "Treetop 6",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_6",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_6"
+  },
+  {
+    "name": "Treetop 7",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_7",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_7"
+  },
+  {
+    "name": "Treetop 8",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_8",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_8"
+  },
+  {
+    "name": "Treetop 9",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Treetop_9",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Treetop_9"
+  },
+  {
+    "name": "Underwood 1",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Underwood_1",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Underwood_1"
+  },
+  {
+    "name": "Underwood 10",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Underwood_10",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Underwood_10"
+  },
+  {
+    "name": "Underwood 2",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Underwood_2",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Underwood_2"
+  },
+  {
+    "name": "Underwood 3",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Underwood_3",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Underwood_3"
+  },
+  {
+    "name": "Underwood 4",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Underwood_4",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Underwood_4"
+  },
+  {
+    "name": "Underwood 5",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Underwood_5",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Underwood_5"
+  },
+  {
+    "name": "Underwood 6",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Underwood_6",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Underwood_6"
+  },
+  {
+    "name": "Underwood 7",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Underwood_7",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Underwood_7"
+  },
+  {
+    "name": "Underwood 8",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Underwood_8",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Underwood_8"
+  },
+  {
+    "name": "Underwood 9",
+    "city": "Ab'Dendriel",
+    "type": "house",
+    "wiki_slug": "Underwood_9",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Underwood_9"
   },
   {
     "name": "Arakmehn I",
@@ -180,6 +719,13 @@
     "size": 17
   },
   {
+    "name": "Botham III d",
+    "city": "Ankrahmun",
+    "type": "house",
+    "wiki_slug": "Botham_III_d",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Botham_III_d"
+  },
+  {
     "name": "Botham III e",
     "city": "Ankrahmun",
     "type": "house",
@@ -218,6 +764,27 @@
     "wiki_slug": "Botham_IV_a",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Botham_IV_a",
     "size": 26
+  },
+  {
+    "name": "Botham IV b",
+    "city": "Ankrahmun",
+    "type": "house",
+    "wiki_slug": "Botham_IV_b",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Botham_IV_b"
+  },
+  {
+    "name": "Botham IV c",
+    "city": "Ankrahmun",
+    "type": "house",
+    "wiki_slug": "Botham_IV_c",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Botham_IV_c"
+  },
+  {
+    "name": "Botham IV d",
+    "city": "Ankrahmun",
+    "type": "house",
+    "wiki_slug": "Botham_IV_d",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Botham_IV_d"
   },
   {
     "name": "Botham IV e",
@@ -356,6 +923,13 @@
     "size": 10
   },
   {
+    "name": "Esuph IV b",
+    "city": "Ankrahmun",
+    "type": "house",
+    "wiki_slug": "Esuph_IV_b",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Esuph_IV_b"
+  },
+  {
     "name": "Esuph IV c",
     "city": "Ankrahmun",
     "type": "house",
@@ -424,6 +998,13 @@
     "wiki_slug": "Murkhol_I_c",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Murkhol_I_c",
     "size": 11
+  },
+  {
+    "name": "Murkhol I d",
+    "city": "Ankrahmun",
+    "type": "house",
+    "wiki_slug": "Murkhol_I_d",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Murkhol_I_d"
   },
   {
     "name": "Oskahl I a",
@@ -1023,6 +1604,13 @@
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Carlin_Clanhall"
   },
   {
+    "name": "Central Plaza 1",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Central_Plaza_1",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Central_Plaza_1"
+  },
+  {
     "name": "Central Plaza 1 (Shop)",
     "city": "Carlin",
     "type": "house",
@@ -1031,12 +1619,26 @@
     "size": 17
   },
   {
+    "name": "Central Plaza 2",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Central_Plaza_2",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Central_Plaza_2"
+  },
+  {
     "name": "Central Plaza 2 (Shop)",
     "city": "Carlin",
     "type": "house",
     "wiki_slug": "Central_Plaza_2_(Shop)",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Central_Plaza_2_(Shop)",
     "size": 17
+  },
+  {
+    "name": "Central Plaza 3",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Central_Plaza_3",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Central_Plaza_3"
   },
   {
     "name": "Central Plaza 3 (Shop)",
@@ -1127,6 +1729,13 @@
     "size": 13
   },
   {
+    "name": "Harbour Flats, Flat 14",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Harbour_Flats,_Flat_14",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Harbour_Flats%2C_Flat_14"
+  },
+  {
     "name": "Harbour Flats, Flat 15",
     "city": "Carlin",
     "type": "house",
@@ -1141,6 +1750,20 @@
     "wiki_slug": "Harbour_Flats,_Flat_16",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Harbour_Flats%2C_Flat_16",
     "size": 22
+  },
+  {
+    "name": "Harbour Flats, Flat 17",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Harbour_Flats,_Flat_17",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Harbour_Flats%2C_Flat_17"
+  },
+  {
+    "name": "Harbour Flats, Flat 18",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Harbour_Flats,_Flat_18",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Harbour_Flats%2C_Flat_18"
   },
   {
     "name": "Harbour Flats, Flat 21",
@@ -1284,6 +1907,20 @@
     "wiki_slug": "Magician's_Alley_5c",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Magician's_Alley_5c",
     "size": 21
+  },
+  {
+    "name": "Magician's Alley 5d",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Magician's_Alley_5d",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Magician's_Alley_5d"
+  },
+  {
+    "name": "Magician's Alley 5e",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Magician's_Alley_5e",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Magician's_Alley_5e"
   },
   {
     "name": "Magician's Alley 5f",
@@ -1553,6 +2190,13 @@
     "size": 34
   },
   {
+    "name": "Senja Village 2",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Senja_Village_2",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Senja_Village_2"
+  },
+  {
     "name": "Senja Village 3",
     "city": "Carlin",
     "type": "house",
@@ -1648,6 +2292,13 @@
     "size": 29
   },
   {
+    "name": "Theater Avenue 11c",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Theater_Avenue_11c",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Theater_Avenue_11c"
+  },
+  {
     "name": "Theater Avenue 12",
     "city": "Carlin",
     "type": "house",
@@ -1670,6 +2321,34 @@
     "wiki_slug": "Theater_Avenue_5",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Theater_Avenue_5",
     "size": 81
+  },
+  {
+    "name": "Theater Avenue 5a",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Theater_Avenue_5a",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Theater_Avenue_5a"
+  },
+  {
+    "name": "Theater Avenue 5b",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Theater_Avenue_5b",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Theater_Avenue_5b"
+  },
+  {
+    "name": "Theater Avenue 5c",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Theater_Avenue_5c",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Theater_Avenue_5c"
+  },
+  {
+    "name": "Theater Avenue 5d",
+    "city": "Carlin",
+    "type": "house",
+    "wiki_slug": "Theater_Avenue_5d",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Theater_Avenue_5d"
   },
   {
     "name": "Theater Avenue 6a",
@@ -2990,6 +3669,20 @@
     "size": 16
   },
   {
+    "name": "Cormaya Flats, Flat 15",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Cormaya_Flats,_Flat_15",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Cormaya_Flats%2C_Flat_15"
+  },
+  {
+    "name": "Cormaya Flats, Flat 16",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Cormaya_Flats,_Flat_16",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Cormaya_Flats%2C_Flat_16"
+  },
+  {
     "name": "Edron Flats, Basement Flat 1",
     "city": "Edron",
     "type": "house",
@@ -3102,6 +3795,34 @@
     "size": 29
   },
   {
+    "name": "Edron Flats, Flat 15",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Edron_Flats,_Flat_15",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Edron_Flats%2C_Flat_15"
+  },
+  {
+    "name": "Edron Flats, Flat 16",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Edron_Flats,_Flat_16",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Edron_Flats%2C_Flat_16"
+  },
+  {
+    "name": "Edron Flats, Flat 17",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Edron_Flats,_Flat_17",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Edron_Flats%2C_Flat_17"
+  },
+  {
+    "name": "Edron Flats, Flat 18",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Edron_Flats,_Flat_18",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Edron_Flats%2C_Flat_18"
+  },
+  {
     "name": "Edron Flats, Flat 21",
     "city": "Edron",
     "type": "house",
@@ -3140,6 +3861,27 @@
     "wiki_slug": "Edron_Flats,_Flat_25",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Edron_Flats%2C_Flat_25",
     "size": 29
+  },
+  {
+    "name": "Edron Flats, Flat 26",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Edron_Flats,_Flat_26",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Edron_Flats%2C_Flat_26"
+  },
+  {
+    "name": "Edron Flats, Flat 27",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Edron_Flats,_Flat_27",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Edron_Flats%2C_Flat_27"
+  },
+  {
+    "name": "Edron Flats, Flat 28",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Edron_Flats,_Flat_28",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Edron_Flats%2C_Flat_28"
   },
   {
     "name": "Magic Academy, Flat 1",
@@ -3265,6 +4007,20 @@
     "size": 22
   },
   {
+    "name": "Stonehome Flats, Flat 05",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Stonehome_Flats,_Flat_05",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Stonehome_Flats%2C_Flat_05"
+  },
+  {
+    "name": "Stonehome Flats, Flat 06",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Stonehome_Flats,_Flat_06",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Stonehome_Flats%2C_Flat_06"
+  },
+  {
     "name": "Stonehome Flats, Flat 11",
     "city": "Edron",
     "type": "house",
@@ -3295,6 +4051,20 @@
     "wiki_slug": "Stonehome_Flats,_Flat_14",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Stonehome_Flats%2C_Flat_14",
     "size": 22
+  },
+  {
+    "name": "Stonehome Flats, Flat 15",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Stonehome_Flats,_Flat_15",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Stonehome_Flats%2C_Flat_15"
+  },
+  {
+    "name": "Stonehome Flats, Flat 16",
+    "city": "Edron",
+    "type": "house",
+    "wiki_slug": "Stonehome_Flats,_Flat_16",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Stonehome_Flats%2C_Flat_16"
   },
   {
     "name": "Stonehome Village 1",
@@ -3677,12 +4447,110 @@
     "size": 25
   },
   {
+    "name": "Lower Barracks 11",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_11",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_11"
+  },
+  {
+    "name": "Lower Barracks 12",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_12",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_12"
+  },
+  {
+    "name": "Lower Barracks 13",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_13",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_13"
+  },
+  {
+    "name": "Lower Barracks 14",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_14",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_14"
+  },
+  {
+    "name": "Lower Barracks 15",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_15",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_15"
+  },
+  {
+    "name": "Lower Barracks 16",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_16",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_16"
+  },
+  {
+    "name": "Lower Barracks 17",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_17",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_17"
+  },
+  {
+    "name": "Lower Barracks 18",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_18",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_18"
+  },
+  {
+    "name": "Lower Barracks 19",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_19",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_19"
+  },
+  {
     "name": "Lower Barracks 2",
     "city": "Kazordoon",
     "type": "house",
     "wiki_slug": "Lower_Barracks_2",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_2",
     "size": 25
+  },
+  {
+    "name": "Lower Barracks 20",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_20",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_20"
+  },
+  {
+    "name": "Lower Barracks 21",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_21",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_21"
+  },
+  {
+    "name": "Lower Barracks 22",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_22",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_22"
+  },
+  {
+    "name": "Lower Barracks 23",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_23",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_23"
+  },
+  {
+    "name": "Lower Barracks 24",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Lower_Barracks_24",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Lower_Barracks_24"
   },
   {
     "name": "Lower Barracks 3",
@@ -3788,12 +4656,61 @@
     "size": 79
   },
   {
+    "name": "Nobility Quarter 6",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Nobility_Quarter_6",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Nobility_Quarter_6"
+  },
+  {
+    "name": "Nobility Quarter 7",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Nobility_Quarter_7",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Nobility_Quarter_7"
+  },
+  {
+    "name": "Nobility Quarter 8",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Nobility_Quarter_8",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Nobility_Quarter_8"
+  },
+  {
+    "name": "Nobility Quarter 9",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Nobility_Quarter_9",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Nobility_Quarter_9"
+  },
+  {
     "name": "Outlaw Camp 1",
     "city": "Kazordoon",
     "type": "house",
     "wiki_slug": "Outlaw_Camp_1",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Outlaw_Camp_1",
     "size": 39
+  },
+  {
+    "name": "Outlaw Camp 10",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Outlaw_Camp_10",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Outlaw_Camp_10"
+  },
+  {
+    "name": "Outlaw Camp 11",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Outlaw_Camp_11",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Outlaw_Camp_11"
+  },
+  {
+    "name": "Outlaw Camp 12 (Shop)",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Outlaw_Camp_12_(Shop)",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Outlaw_Camp_12_(Shop)"
   },
   {
     "name": "Outlaw Camp 13 (Shop)",
@@ -3836,12 +4753,33 @@
     "size": 17
   },
   {
+    "name": "Outlaw Camp 5",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Outlaw_Camp_5",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Outlaw_Camp_5"
+  },
+  {
+    "name": "Outlaw Camp 6",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Outlaw_Camp_6",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Outlaw_Camp_6"
+  },
+  {
     "name": "Outlaw Camp 7",
     "city": "Kazordoon",
     "type": "house",
     "wiki_slug": "Outlaw_Camp_7",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Outlaw_Camp_7",
     "size": 17
+  },
+  {
+    "name": "Outlaw Camp 8",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Outlaw_Camp_8",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Outlaw_Camp_8"
   },
   {
     "name": "Outlaw Camp 9",
@@ -3954,6 +4892,34 @@
     "size": 27
   },
   {
+    "name": "Tunnel Gardens 10",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Tunnel_Gardens_10",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Tunnel_Gardens_10"
+  },
+  {
+    "name": "Tunnel Gardens 11",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Tunnel_Gardens_11",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Tunnel_Gardens_11"
+  },
+  {
+    "name": "Tunnel Gardens 12",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Tunnel_Gardens_12",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Tunnel_Gardens_12"
+  },
+  {
+    "name": "Tunnel Gardens 2",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Tunnel_Gardens_2",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Tunnel_Gardens_2"
+  },
+  {
     "name": "Tunnel Gardens 2 ",
     "city": "Kazordoon",
     "type": "house",
@@ -4026,6 +4992,27 @@
     "size": 16
   },
   {
+    "name": "Upper Barracks 10",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Upper_Barracks_10",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Upper_Barracks_10"
+  },
+  {
+    "name": "Upper Barracks 11",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Upper_Barracks_11",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Upper_Barracks_11"
+  },
+  {
+    "name": "Upper Barracks 12",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Upper_Barracks_12",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Upper_Barracks_12"
+  },
+  {
     "name": "Upper Barracks 13",
     "city": "Kazordoon",
     "type": "house",
@@ -4064,6 +5051,34 @@
     "wiki_slug": "Upper_Barracks_5",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Upper_Barracks_5",
     "size": 27
+  },
+  {
+    "name": "Upper Barracks 6",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Upper_Barracks_6",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Upper_Barracks_6"
+  },
+  {
+    "name": "Upper Barracks 7",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Upper_Barracks_7",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Upper_Barracks_7"
+  },
+  {
+    "name": "Upper Barracks 8",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Upper_Barracks_8",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Upper_Barracks_8"
+  },
+  {
+    "name": "Upper Barracks 9",
+    "city": "Kazordoon",
+    "type": "house",
+    "wiki_slug": "Upper_Barracks_9",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Upper_Barracks_9"
   },
   {
     "name": "Wolftower",
@@ -4437,6 +5452,13 @@
     "wiki_slug": "Straycat's_Corner_2",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Straycat's_Corner_2",
     "size": 22
+  },
+  {
+    "name": "Straycat's Corner 3",
+    "city": "Liberty Bay",
+    "type": "house",
+    "wiki_slug": "Straycat's_Corner_3",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Straycat's_Corner_3"
   },
   {
     "name": "Straycat's Corner 4",
@@ -6002,6 +7024,13 @@
     "size": 21
   },
   {
+    "name": "Farm Lane, 1st Floor (Shop)",
+    "city": "Thais",
+    "type": "house",
+    "wiki_slug": "Farm_Lane,_1st_Floor_(Shop)",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Farm_Lane%2C_1st_Floor_(Shop)"
+  },
+  {
     "name": "Farm Lane, 2nd Floor (Shop)",
     "city": "Thais",
     "type": "house",
@@ -6065,6 +7094,13 @@
     "size": 26
   },
   {
+    "name": "Fibula Village, Bar",
+    "city": "Thais",
+    "type": "house",
+    "wiki_slug": "Fibula_Village,_Bar",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Fibula_Village%2C_Bar"
+  },
+  {
     "name": "Fibula Village, Bar (Shop)",
     "city": "Thais",
     "type": "house",
@@ -6089,11 +7125,25 @@
     "size": 222
   },
   {
+    "name": "Frodo's Hut",
+    "city": "Thais",
+    "type": "house",
+    "wiki_slug": "Frodo's_Hut",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Frodo's_Hut"
+  },
+  {
     "name": "Greenshore Clanhall",
     "city": "Thais",
     "type": "guildhall",
     "wiki_slug": "Greenshore_Clanhall",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Greenshore_Clanhall"
+  },
+  {
+    "name": "Greenshore House",
+    "city": "Thais",
+    "type": "house",
+    "wiki_slug": "Greenshore_House",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Greenshore_House"
   },
   {
     "name": "Greenshore Village 1",
@@ -6118,6 +7168,20 @@
     "wiki_slug": "Greenshore_Village_3",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Greenshore_Village_3",
     "size": 26
+  },
+  {
+    "name": "Greenshore Village 4",
+    "city": "Thais",
+    "type": "house",
+    "wiki_slug": "Greenshore_Village_4",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Greenshore_Village_4"
+  },
+  {
+    "name": "Greenshore Village 5",
+    "city": "Thais",
+    "type": "house",
+    "wiki_slug": "Greenshore_Village_5",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Greenshore_Village_5"
   },
   {
     "name": "Greenshore Village 6",
@@ -6362,6 +7426,27 @@
     "wiki_slug": "Sorcerer's_Avenue_Labs_2c",
     "wiki_url": "https://www.tibiawiki.com.br/wiki/Sorcerer's_Avenue_Labs_2c",
     "size": 29
+  },
+  {
+    "name": "Sorcerer's Avenue Labs 2d",
+    "city": "Thais",
+    "type": "house",
+    "wiki_slug": "Sorcerer's_Avenue_Labs_2d",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Sorcerer's_Avenue_Labs_2d"
+  },
+  {
+    "name": "Sorcerer's Avenue Labs 2e",
+    "city": "Thais",
+    "type": "house",
+    "wiki_slug": "Sorcerer's_Avenue_Labs_2e",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Sorcerer's_Avenue_Labs_2e"
+  },
+  {
+    "name": "Sorcerer's Avenue Labs 2f",
+    "city": "Thais",
+    "type": "house",
+    "wiki_slug": "Sorcerer's_Avenue_Labs_2f",
+    "wiki_url": "https://www.tibiawiki.com.br/wiki/Sorcerer's_Avenue_Labs_2f"
   },
   {
     "name": "Southern Thais Guildhall",

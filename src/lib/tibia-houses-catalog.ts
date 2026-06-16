@@ -11,17 +11,20 @@ export interface TibiaHouseEntry {
 
 const catalog = houses_catalog as TibiaHouseEntry[]
 
-export function get_cities(): string[] {
-  const cities = new Set(catalog.map((entry) => entry.city))
+export function get_cities(type?: 'house' | 'guildhall'): string[] {
+  const entries = type ? catalog.filter((entry) => entry.type === type) : catalog
+  const cities = new Set(entries.map((entry) => entry.city))
   return [...cities].sort((a, b) => a.localeCompare(b))
 }
 
 export function get_houses_by_city(city: string, type?: 'house' | 'guildhall'): TibiaHouseEntry[] {
-  return catalog.filter((entry) => {
-    if (entry.city !== city) return false
-    if (type && entry.type !== type) return false
-    return true
-  })
+  return catalog
+    .filter((entry) => {
+      if (entry.city !== city) return false
+      if (type && entry.type !== type) return false
+      return true
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
 }
 
 export function find_house(city: string, name: string): TibiaHouseEntry | undefined {

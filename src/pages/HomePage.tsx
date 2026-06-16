@@ -36,7 +36,7 @@ export function HomePage() {
   }, [])
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4 py-8">
       <section className="text-center mb-10">
         <h2 className="text-3xl font-bold text-tibia-gold mb-3">
           Concurso de Decoração de Houses
