@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import { usePhase } from '../hooks/usePhase'
@@ -48,12 +47,21 @@ export function RankingPage() {
 }
 
 export function AdminPage() {
-  const { discord_id, is_authenticated, login } = useAuth()
-  const { admin_ids } = usePhase()
+  const { discord_id, is_authenticated, login, loading: auth_loading } = useAuth()
+  const { admin_ids, loading: phase_loading } = usePhase()
   const [houses, set_houses] = useState<House[]>([])
   const [loading, set_loading] = useState(true)
 
   const user_is_admin = is_admin(discord_id, admin_ids)
+
+  console.log('[AdminPage] access check', {
+    discord_id,
+    is_authenticated,
+    auth_loading,
+    phase_loading,
+    admin_ids,
+    user_is_admin,
+  })
 
   useEffect(() => {
     if (!user_is_admin) return
@@ -98,8 +106,20 @@ export function AdminPage() {
     )
   }
 
+  if (auth_loading || phase_loading) {
+    return <div className="text-center py-16 text-amber-200/50">A carregar painel admin...</div>
+  }
+
   if (!user_is_admin) {
-    return <Navigate to="/" replace />
+    console.warn('[AdminPage] acesso negado', { discord_id, admin_ids })
+    return (
+      <div className="max-w-lg mx-auto px-4 py-16 text-center">
+        <p className="text-amber-200/70 mb-2">Acesso negado ao painel admin.</p>
+        <p className="text-xs text-amber-200/40">
+          Discord ID atual: <code>{discord_id ?? 'não autenticado'}</code>
+        </p>
+      </div>
+    )
   }
 
   const pending_houses = houses.filter((h) => h.status === 'pending')

@@ -43,6 +43,12 @@ export function useAuth() {
       contest_user: data,
       discord_id,
     }))
+    console.log('[useAuth] sync_contest_user', {
+      discord_id,
+      username,
+      has_avatar: !!avatar,
+      has_contest_user: !!data,
+    })
   }, [])
 
   useEffect(() => {
@@ -55,6 +61,9 @@ export function useAuth() {
         discord_id: stored.discord_id,
         loading: false,
       }))
+      console.log('[useAuth] loaded discord_session from localStorage', {
+        discord_id: stored.discord_id,
+      })
       sync_contest_user(stored.discord_id, stored.discord_username, stored.discord_avatar)
     } else {
       set_state((prev) => ({ ...prev, loading: false }))
@@ -82,9 +91,16 @@ export function useAuth() {
       }
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       const user = session?.user ?? null
       const discord_id = user ? get_discord_id_from_user(user) : null
+
+      console.log('[useAuth] onAuthStateChange', {
+        event,
+        has_session: !!session,
+        discord_id,
+        prev_discord_id: state.discord_id,
+      })
 
       set_state((prev) => ({
         ...prev,
@@ -99,6 +115,7 @@ export function useAuth() {
 
   const logout = async () => {
     await sign_out()
+    console.log('[useAuth] logout')
     set_state({
       session: null,
       user: null,

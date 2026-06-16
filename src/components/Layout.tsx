@@ -6,8 +6,17 @@ import { is_admin, format_discord_avatar } from '../lib/auth'
 
 export function Layout() {
   const { is_authenticated, discord_id, discord_session, login, logout } = useAuth()
-  const { phase, admin_ids } = usePhase()
+  const { phase, admin_ids, loading: phase_loading } = usePhase()
   const location = useLocation()
+
+  console.log('[Layout] render', {
+    path: location.pathname,
+    is_authenticated,
+    discord_id,
+    admin_ids,
+    phase_loading,
+    show_admin: !phase_loading && is_admin(discord_id, admin_ids),
+  })
 
   const nav_link_class = (path: string) =>
     `px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -39,7 +48,7 @@ export function Layout() {
             <Link to="/votar" className={nav_link_class('/votar')}>Votar</Link>
             <Link to="/regras" className={nav_link_class('/regras')}>Regras</Link>
             <Link to="/ranking" className={nav_link_class('/ranking')}>Ranking</Link>
-            {is_admin(discord_id, admin_ids) && (
+            {!phase_loading && is_admin(discord_id, admin_ids) && (
               <Link to="/admin" className={nav_link_class('/admin')}>Admin</Link>
             )}
           </nav>

@@ -37,9 +37,20 @@ export function usePhase() {
         .map((id: string) => id.trim())
         .filter(Boolean)
 
+      console.log('[usePhase] contest_config loaded', {
+        registration_start: contest_dates.registration_start,
+        registration_end: contest_dates.registration_end,
+        validation_end: contest_dates.validation_end,
+        voting_end: contest_dates.voting_end,
+        env_admins,
+        db_admins,
+      })
+
       set_dates(contest_dates)
       set_phase(get_current_phase(contest_dates))
-      set_admin_ids([...new Set([...env_admins, ...db_admins])])
+      const merged_admins = [...new Set([...env_admins, ...db_admins])]
+      console.log('[usePhase] merged admin_ids', merged_admins)
+      set_admin_ids(merged_admins)
       set_loading(false)
     }
 

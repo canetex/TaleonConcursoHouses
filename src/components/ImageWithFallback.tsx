@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { normalize_image_url } from '../lib/images'
 
 interface ImageWithFallbackProps {
   src: string
@@ -8,10 +9,12 @@ interface ImageWithFallbackProps {
 
 export function ImageWithFallback({ src, alt, className }: ImageWithFallbackProps) {
   const [errored, set_errored] = useState(false)
+  const normalized_src = normalize_image_url(src)
 
   useEffect(() => {
     set_errored(false)
-  }, [src])
+    console.log('[ImageWithFallback] src changed', { src, normalized_src })
+  }, [src, normalized_src])
 
   if (errored) {
     return (
@@ -24,10 +27,16 @@ export function ImageWithFallback({ src, alt, className }: ImageWithFallbackProp
 
   return (
     <img
-      src={src}
+      src={normalized_src}
       alt={alt}
       className={className}
-      onError={() => set_errored(true)}
+      onLoad={() => {
+        console.log('[ImageWithFallback] onLoad ok', { src, normalized_src })
+      }}
+      onError={() => {
+        console.log('[ImageWithFallback] onError', { src, normalized_src })
+        set_errored(true)
+      }}
     />
   )
 }

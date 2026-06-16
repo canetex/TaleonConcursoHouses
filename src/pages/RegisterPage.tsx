@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import { usePhase } from '../hooks/usePhase'
 import { can_register } from '../lib/phases'
 import { validate_character } from '../lib/character'
+import { normalize_image_url } from '../lib/images'
 import type { HouseRegistrationForm } from '../types'
 
 const empty_form: HouseRegistrationForm = {
@@ -32,6 +33,7 @@ export function RegisterPage() {
 
   useEffect(() => {
     if (!discord_id) return
+    console.log('[RegisterPage] checking existing house for discord_id', { discord_id })
     supabase
       .from('houses')
       .select('id')
@@ -48,6 +50,7 @@ export function RegisterPage() {
   const handle_validate_character = async () => {
     set_validating(true)
     set_character_valid(null)
+    console.log('[RegisterPage] handle_validate_character', { character_name: form.character_name })
     const valid = await validate_character(form.character_name)
     set_character_valid(valid)
     set_validating(false)
@@ -85,8 +88,10 @@ export function RegisterPage() {
     }
 
     const screenshot_urls = form.screenshot_urls
-      .map((url) => url.trim())
+      .map((url) => normalize_image_url(url.trim()))
       .filter(Boolean)
+
+    console.log('[RegisterPage] submit screenshot_urls', screenshot_urls)
 
     if (screenshot_urls.length === 0) {
       set_error('Adicione pelo menos uma URL de screenshot.')
@@ -331,7 +336,7 @@ export function RegisterPage() {
 }
 
 function ScreenshotPreview({ url }: { url: string }) {
-  const trimmed = url.trim()
+  const trimmed = normalize_image_url(url.trim())
   const [status, set_status] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle')
 
   useEffect(() => {
@@ -339,6 +344,7 @@ function ScreenshotPreview({ url }: { url: string }) {
       set_status('idle')
       return
     }
+    console.log('[ScreenshotPreview] start loading', { url: trimmed })
     set_status('loading')
   }, [trimmed])
 
@@ -355,8 +361,14 @@ function ScreenshotPreview({ url }: { url: string }) {
           <img
             src={trimmed}
             alt="Pré-visualização"
-            onLoad={() => set_status('ok')}
-            onError={() => set_status('error')}
+            onLoad={() => {
+              console.log('[ScreenshotPreview] onLoad ok', { url: trimmed })
+              set_status('ok')
+            }}
+            onError={() => {
+              console.log('[ScreenshotPreview] onError', { url: trimmed })
+              set_status('error')
+            }}
             className={`max-h-40 rounded-lg border border-amber-800/40 object-contain bg-black/40 ${
               status === 'ok' ? 'opacity-100' : 'opacity-0 h-0'
             }`}

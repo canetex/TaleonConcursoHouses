@@ -19,6 +19,11 @@ export function HouseCarousel({ houses }: HouseCarouselProps) {
   }
 
   const house = houses[current_index]
+  console.log('[HouseCarousel] render house', {
+    index: current_index,
+    house_id: house.id,
+    first_screenshot: house.screenshot_urls[0],
+  })
 
   const go_prev = () => set_current_index((i) => (i - 1 + houses.length) % houses.length)
   const go_next = () => set_current_index((i) => (i + 1) % houses.length)
