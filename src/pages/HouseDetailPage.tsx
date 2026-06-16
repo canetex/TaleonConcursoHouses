@@ -190,7 +190,10 @@ export function HouseDetailPage() {
           </div>
 
           {map_coords && (
-            <div className="mt-5">
+            <div className="mt-6 p-4 rounded-2xl bg-tibia-accent/10 border-2 border-tibia-gold/40">
+              <h3 className="text-sm font-semibold text-tibia-gold mb-3 flex items-center gap-2">
+                <span aria-hidden>🗺️</span> Localização no mapa
+              </h3>
               <HouseMinimap
                 x={map_coords.x}
                 y={map_coords.y}
@@ -200,6 +203,20 @@ export function HouseDetailPage() {
               />
             </div>
           )}
+
+          <div className="mt-5 flex flex-wrap gap-3">
+            <CharacterProfileLink
+              character_name={house.character_name}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-tibia-dark/80 border border-amber-700/40 text-tibia-gold text-sm font-medium hover:border-tibia-gold/60 transition-colors"
+            />
+            {house.house_wiki_slug && (
+              <TibiaWikiHouseLink
+                wiki_slug={house.house_wiki_slug}
+                house_name={house.house_tibia_name ?? 'Ver na Tibia Wiki'}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-tibia-dark/80 border border-amber-700/40 text-amber-100 text-sm font-medium hover:border-tibia-gold/60 transition-colors"
+              />
+            )}
+          </div>
 
           {leaderboard_entry && (
             <div className="mt-5 p-4 rounded-xl bg-tibia-accent/10 border border-amber-700/30">

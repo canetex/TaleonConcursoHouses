@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, Navigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
+import { invoke_with_session } from '../lib/contest-api'
 import { usePhase } from '../hooks/usePhase'
 import { can_register } from '../lib/phases'
 import { validate_character } from '../lib/character'
@@ -53,7 +54,7 @@ function house_to_form(house: House): HouseRegistrationForm {
 }
 
 export function RegisterPage() {
-  const { is_authenticated, discord_id, login } = useAuth()
+  const { is_authenticated, discord_id } = useAuth()
   const { phase } = usePhase()
   const navigate = useNavigate()
 
@@ -191,62 +192,43 @@ export function RegisterPage() {
     }
 
     if (is_editing && existing_house) {
-      const { error: update_error } = await supabase
-        .from('houses')
-        .update({
-          ...payload,
-          ...(existing_house.status === 'rejected' ? { status: 'pending' as const } : {}),
-        })
-        .eq('id', existing_house.id)
-        .eq('discord_user_id', discord_id)
+      const { data, error: update_error } = await invoke_with_session<{ house: House; action: string }>(
+        'upsert-house',
+        payload,
+      )
 
       set_submitting(false)
 
       if (update_error) {
-        if (update_error.code === '23505') {
-          set_error('Este personagem já possui outra inscrição.')
-        } else {
-          set_error(update_error.message)
-        }
+        set_error(update_error.message)
         return
       }
 
-      navigate(`/house/${existing_house.id}`)
+      navigate(`/house/${data?.house?.id ?? existing_house.id}`)
       return
     }
 
-    const { error: insert_error } = await supabase.from('houses').insert({
-      discord_user_id: discord_id,
-      ...payload,
-      status: 'pending',
-    })
+    const { data, error: insert_error } = await invoke_with_session<{ house: House; action: string }>(
+      'upsert-house',
+      payload,
+    )
 
     set_submitting(false)
 
     if (insert_error) {
-      if (insert_error.code === '23505') {
-        set_error('Este personagem ou conta Discord já possui uma inscrição.')
-      } else {
-        set_error(insert_error.message)
-      }
+      set_error(insert_error.message)
       return
     }
 
-    navigate('/')
+    if (data?.house?.id) {
+      navigate(`/house/${data.house.id}`)
+    } else {
+      navigate('/')
+    }
   }
 
   if (!is_authenticated) {
-    return (
-      <div className="max-w-lg mx-auto px-4 py-16 text-center">
-        <p className="text-amber-200/70 mb-6">Faça login com Discord para inscrever a sua casa.</p>
-        <button
-          onClick={() => login()}
-          className="px-6 py-3 rounded-xl bg-[#5865F2] hover:bg-[#4752C4] text-white font-medium transition-colors"
-        >
-          Entrar com Discord
-        </button>
-      </div>
-    )
+    return <Navigate to={`/login?redirect=${encodeURIComponent('/inscrever')}`} replace />
   }
 
   if (loading_house) {

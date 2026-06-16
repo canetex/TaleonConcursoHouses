@@ -1,4 +1,6 @@
+import { Navigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { invoke_with_session } from '../lib/contest-api'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import { usePhase } from '../hooks/usePhase'
@@ -48,7 +50,7 @@ export function RankingPage() {
 }
 
 export function AdminPage() {
-  const { discord_id, is_authenticated, login, loading: auth_loading } = useAuth()
+  const { discord_id, is_authenticated, loading: auth_loading } = useAuth()
   const { admin_ids, loading: phase_loading } = usePhase()
   const [houses, set_houses] = useState<House[]>([])
   const [loading, set_loading] = useState(true)
@@ -84,10 +86,10 @@ export function AdminPage() {
     house_id: string,
     updates: Partial<Pick<House, 'status' | 'organizer_votes' | 'honorable_mention' | 'dummies_count' | 'hirelings_count'>>,
   ) => {
-    const { error } = await supabase
-      .from('houses')
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', house_id)
+    const { error } = await invoke_with_session('admin-update-house', {
+      house_id,
+      updates,
+    })
 
     if (!error) {
       set_houses((prev) =>
@@ -97,14 +99,7 @@ export function AdminPage() {
   }
 
   if (!is_authenticated) {
-    return (
-      <div className="max-w-lg mx-auto px-4 py-16 text-center">
-        <p className="text-amber-200/70 mb-6">Login necessário para aceder ao painel admin.</p>
-        <button onClick={() => login()} className="px-6 py-3 rounded-xl bg-[#5865F2] text-white">
-          Entrar com Discord
-        </button>
-      </div>
-    )
+    return <Navigate to={`/login?redirect=${encodeURIComponent('/admin')}`} replace />
   }
 
   if (auth_loading || phase_loading) {

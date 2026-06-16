@@ -1,15 +1,17 @@
 import { useEffect, useState, useCallback } from 'react'
+import { Navigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { usePhase } from '../hooks/usePhase'
 import { can_vote } from '../lib/phases'
 import { validate_character } from '../lib/character'
+import { invoke_with_session } from '../lib/contest-api'
 import { supabase } from '../lib/supabase'
 import { SwipeCard } from '../components/SwipeCard'
 import { TaleonSanLink } from '../lib/links'
 import type { House, VoteType } from '../types'
 
 export function VotePage() {
-  const { is_authenticated, discord_id, login } = useAuth()
+  const { is_authenticated, discord_id } = useAuth()
   const { phase } = usePhase()
 
   const [voter_character, set_voter_character] = useState('')
@@ -35,13 +37,13 @@ export function VotePage() {
 
   const load_user_votes = useCallback(async () => {
     if (!discord_id) return
-    const { data } = await supabase
-      .from('house_votes')
-      .select('house_id, vote_type')
-      .eq('discord_user_id', discord_id)
+    const { data, error } = await invoke_with_session<{ votes: Array<{ house_id: string; vote_type: VoteType }> }>(
+      'get-my-votes',
+    )
+    if (error || !data?.votes) return
 
     const votes_map: Record<string, VoteType> = {}
-    for (const vote of data ?? []) {
+    for (const vote of data.votes) {
       votes_map[vote.house_id] = vote.vote_type
     }
     set_user_votes(votes_map)
@@ -72,16 +74,11 @@ export function VotePage() {
   const handle_vote = async (house_id: string, vote_type: VoteType) => {
     if (!discord_id || !character_confirmed) return
 
-    const { error } = await supabase.from('house_votes').upsert(
-      {
-        discord_user_id: discord_id,
-        voter_character: voter_character.trim(),
-        house_id,
-        vote_type,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'discord_user_id,house_id' },
-    )
+    const { error } = await invoke_with_session('cast-vote', {
+      house_id,
+      vote_type,
+      voter_character: voter_character.trim(),
+    })
 
     if (!error) {
       set_user_votes((prev) => ({ ...prev, [house_id]: vote_type }))
@@ -90,17 +87,7 @@ export function VotePage() {
   }
 
   if (!is_authenticated) {
-    return (
-      <div className="max-w-lg mx-auto px-4 py-16 text-center">
-        <p className="text-amber-200/70 mb-6">Faça login com Discord para votar.</p>
-        <button
-          onClick={() => login()}
-          className="px-6 py-3 rounded-xl bg-[#5865F2] hover:bg-[#4752C4] text-white font-medium"
-        >
-          Entrar com Discord
-        </button>
-      </div>
-    )
+    return <Navigate to={`/login?redirect=${encodeURIComponent('/votar')}`} replace />
   }
 
   if (!can_vote(phase)) {

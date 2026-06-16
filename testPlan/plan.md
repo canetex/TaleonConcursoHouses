@@ -15,7 +15,7 @@ A autenticação real via Discord já foi validada manualmente e não deve ser t
 * Proponha um script de utilidade (ex: `global-setup.ts` no Playwright) que injete uma sessão válida/simulada no navegador para que os testes E2E possam rodar diretamente nas rotas protegidas, sem passar pela tela de login do Discord.
 
 ## Fase 3: Mapeamento de Cenários Específicos
-Crie uma lista (em formato `.md` aqui no chat), detalhando os cenários que serão testados e o resultado esperado, baseando-se no código que você leu. A lista deve incluir, no mínimo:
+Crie uma lista (em formato `.md` no caminho `/testPlan/`), detalhando os cenários que serão testados e o resultado esperado, baseando-se no código que você leu. A lista deve incluir, no mínimo:
 
 * **Fluxo de Usuário Deslogado:** Visualização da home, tentativa de acessar rotas protegidas (deve redirecionar), visualização de casas/concursos públicos, garantia de que não é possível votar ou se inscrever, visualização de diversas casas sem votar e visualização do ranking.
 * **Fluxo de Usuário Logado (Bypass ativo):** Envio de uma casa para o concurso, edição de submissão, listagem de participações e edição de uma inscrição.

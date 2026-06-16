@@ -1,5 +1,6 @@
 import { supabase } from './supabase'
 import { clear_discord_session, set_discord_session, type DiscordSession } from './session'
+import { invoke_with_session } from './contest-api'
 import type { ContestUser } from '../types'
 
 const DISCORD_AUTHORIZE_URL = 'https://discord.com/api/oauth2/authorize'
@@ -83,6 +84,7 @@ export async function complete_discord_auth(code: string): Promise<DiscordSessio
     discord_id: data.discord_id as string,
     discord_username: (data.discord_username as string | null) ?? null,
     discord_avatar: (data.discord_avatar as string | null) ?? null,
+    session_token: (data.session_token as string | undefined) ?? undefined,
   }
 
   set_discord_session(session)
@@ -95,29 +97,20 @@ export async function sign_out(): Promise<void> {
 }
 
 export async function upsert_contest_user(
-  discord_id: string,
+  _discord_id: string,
   discord_username: string | null,
   discord_avatar: string | null,
 ): Promise<ContestUser | null> {
-  const { data, error } = await supabase
-    .from('contest_users')
-    .upsert(
-      {
-        discord_id,
-        discord_username,
-        discord_avatar,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'discord_id' },
-    )
-    .select()
-    .single()
+  const { data, error } = await invoke_with_session<{ profile: ContestUser }>('update-profile', {
+    discord_username,
+    discord_avatar,
+  })
 
   if (error) {
     console.error('Failed to upsert contest user:', error)
     return null
   }
-  return data
+  return data?.profile ?? null
 }
 
 export function is_admin(discord_id: string | null, admin_ids: string[]): boolean {

@@ -1,25 +1,19 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "jsr:@supabase/supabase-js@2";
+import { cors_headers, json_response, options_response } from "../_shared/cors.ts";
+import { create_session_token } from "../_shared/session.ts";
+import { create_admin_client } from "../_shared/supabase-admin.ts";
+import { check_rate_limit } from "../_shared/rate-limit.ts";
 
 const DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token";
 const DISCORD_USER_URL = "https://discord.com/api/users/@me";
 const DEFAULT_CLIENT_ID = "1516151956291190884";
 
-const cors_headers = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Content-Type": "application/json",
-};
-
-async function get_discord_credentials(supabase: ReturnType<typeof createClient>) {
+async function get_discord_credentials(supabase: ReturnType<typeof create_admin_client>) {
   const { data } = await supabase.from("contest_config").select("key, value").in("key", [
     "discord_client_id",
     "discord_client_secret",
   ]);
-
   const config = Object.fromEntries((data ?? []).map((row) => [row.key, row.value]));
-
   return {
     client_id: Deno.env.get("DISCORD_CLIENT_ID") ?? config.discord_client_id ?? DEFAULT_CLIENT_ID,
     client_secret: Deno.env.get("DISCORD_CLIENT_SECRET") ?? config.discord_client_secret ?? "",
@@ -27,25 +21,19 @@ async function get_discord_credentials(supabase: ReturnType<typeof createClient>
 }
 
 Deno.serve(async (req: Request) => {
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: cors_headers });
+  if (req.method === "OPTIONS") return options_response();
+  if (!check_rate_limit(req, "discord-auth")) {
+    return json_response({ error: "Rate limit excedido" }, 429);
   }
 
   try {
     const { code, redirect_uri, code_verifier } = await req.json();
 
     if (!code || !redirect_uri) {
-      return new Response(
-        JSON.stringify({ error: "code e redirect_uri são obrigatórios" }),
-        { status: 400, headers: cors_headers },
-      );
+      return json_response({ error: "code e redirect_uri são obrigatórios" }, 400);
     }
 
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-    );
-
+    const supabase = create_admin_client();
     const { client_id, client_secret } = await get_discord_credentials(supabase);
 
     const token_params = new URLSearchParams({
@@ -60,12 +48,9 @@ Deno.serve(async (req: Request) => {
     } else if (client_secret) {
       token_params.set("client_secret", client_secret);
     } else {
-      return new Response(
-        JSON.stringify({
-          error: "Discord OAuth requer PKCE (code_verifier) ou Client Secret configurado",
-        }),
-        { status: 500, headers: cors_headers },
-      );
+      return json_response({
+        error: "Discord OAuth requer PKCE (code_verifier) ou Client Secret configurado",
+      }, 500);
     }
 
     const token_response = await fetch(DISCORD_TOKEN_URL, {
@@ -73,27 +58,19 @@ Deno.serve(async (req: Request) => {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: token_params,
     });
-
     const token_data = await token_response.json();
 
     if (!token_response.ok) {
-      return new Response(
-        JSON.stringify({ error: "Falha ao trocar código Discord", details: token_data }),
-        { status: 400, headers: cors_headers },
-      );
+      return json_response({ error: "Falha ao trocar código Discord", details: token_data }, 400);
     }
 
     const user_response = await fetch(DISCORD_USER_URL, {
       headers: { Authorization: `Bearer ${token_data.access_token}` },
     });
-
     const discord_user = await user_response.json();
 
     if (!user_response.ok) {
-      return new Response(
-        JSON.stringify({ error: "Falha ao obter perfil Discord", details: discord_user }),
-        { status: 400, headers: cors_headers },
-      );
+      return json_response({ error: "Falha ao obter perfil Discord", details: discord_user }, 400);
     }
 
     const discord_id = discord_user.id as string;
@@ -113,18 +90,13 @@ Deno.serve(async (req: Request) => {
       { onConflict: "discord_id" },
     );
 
+    const session_token = await create_session_token(discord_id);
+
     return new Response(
-      JSON.stringify({
-        discord_id,
-        discord_username,
-        discord_avatar,
-      }),
+      JSON.stringify({ discord_id, discord_username, discord_avatar, session_token }),
       { headers: cors_headers },
     );
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: String(error) }),
-      { status: 500, headers: cors_headers },
-    );
+    return json_response({ error: String(error) }, 500);
   }
 });

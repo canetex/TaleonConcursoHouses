@@ -31,7 +31,11 @@ export function RulesPage() {
       day: '2-digit',
       month: 'long',
       year: 'numeric',
+      timeZone: 'UTC',
     })
+
+  const format_datetime_utc = (iso: string) =>
+    `${new Date(iso).toISOString().slice(0, 16).replace('T', ' ')} UTC`
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
@@ -49,13 +53,20 @@ export function RulesPage() {
 
       <div className="space-y-6">
         <SectionCard icon="📅" title="Cronograma Geral">
+          <p className="text-xs text-amber-200/50 mb-4">
+            Todas as datas abaixo são interpretadas pelo servidor em <strong className="text-amber-200/70">UTC</strong>.
+          </p>
           <ul className="space-y-3 text-sm text-amber-200/80">
             <li className="flex gap-2">
               <span className="text-tibia-gold shrink-0">•</span>
               <span>
                 <strong className="text-amber-100">Período de Inscrições:</strong> 15 dias
                 {dates && (
-                  <> ({format_date(dates.registration_start)} — {format_date(dates.registration_end)})</>
+                  <>
+                    {' '}
+                    ({format_datetime_utc(dates.registration_start)} —{' '}
+                    {format_datetime_utc(dates.registration_end)})
+                  </>
                 )}
                 . Abertura e fecho automáticos no portal.
               </span>

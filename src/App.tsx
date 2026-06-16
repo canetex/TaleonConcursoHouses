@@ -7,6 +7,7 @@ import { HouseDetailPage } from './pages/HouseDetailPage'
 import { RankingPage, AdminPage } from './pages/RankingPage'
 import { AuthCallbackPage } from './pages/AuthCallbackPage'
 import { RulesPage } from './pages/RulesPage'
+import { LoginPage } from './pages/LoginPage'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="ranking" element={<RankingPage />} />
           <Route path="admin" element={<AdminPage />} />
           <Route path="house/:id" element={<HouseDetailPage />} />
+          <Route path="login" element={<LoginPage />} />
           <Route path="auth/callback" element={<AuthCallbackPage />} />
         </Route>
       </Routes>

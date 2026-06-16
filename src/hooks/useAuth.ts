@@ -20,34 +20,30 @@ interface AuthState {
 }
 
 export function useAuth() {
+  const stored_session = typeof window !== 'undefined' ? get_discord_session() : null
+
   const [state, set_state] = useState<AuthState>({
     session: null,
     user: null,
-    discord_session: null,
+    discord_session: stored_session,
     contest_user: null,
-    discord_id: null,
-    loading: true,
+    discord_id: stored_session?.discord_id ?? null,
+    loading: !stored_session,
   })
 
   const sync_contest_user = useCallback(async (discord_id: string, username: string | null, avatar: string | null) => {
-    await upsert_contest_user(discord_id, username, avatar)
-
-    const { data } = await supabase
-      .from('contest_users')
-      .select('*')
-      .eq('discord_id', discord_id)
-      .single()
+    const profile = await upsert_contest_user(discord_id, username, avatar)
 
     set_state((prev) => ({
       ...prev,
-      contest_user: data,
+      contest_user: profile,
       discord_id,
     }))
     console.log('[useAuth] sync_contest_user', {
       discord_id,
       username,
       has_avatar: !!avatar,
-      has_contest_user: !!data,
+      has_contest_user: !!profile,
     })
   }, [])
 

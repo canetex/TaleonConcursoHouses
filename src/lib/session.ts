@@ -2,6 +2,7 @@ export interface DiscordSession {
   discord_id: string
   discord_username: string | null
   discord_avatar: string | null
+  session_token?: string
 }
 
 const SESSION_KEY = 'taleon_discord_session'

@@ -1,6 +1,24 @@
 import { supabase } from './supabase'
 
 const DIRECT_IMAGE_PATTERN = /\.(png|jpe?g|gif|webp|bmp)(\?.*)?$/i
+const BLOCKED_URL_PATTERN = /^(data:|javascript:)/i
+const ALLOWED_IMAGE_HOSTS = new Set(['i.imgur.com', 'imgur.com'])
+
+export function is_screenshot_url_allowed(url: string): boolean {
+  const trimmed = url.trim()
+  if (!trimmed || BLOCKED_URL_PATTERN.test(trimmed)) return false
+  if (trimmed.toLowerCase().includes('.svg')) return false
+
+  try {
+    const parsed = new URL(trimmed)
+    const host = parsed.hostname.replace(/^www\./, '').toLowerCase()
+    if (!ALLOWED_IMAGE_HOSTS.has(host)) return false
+    if (host === 'imgur.com') return true
+    return DIRECT_IMAGE_PATTERN.test(parsed.pathname)
+  } catch {
+    return false
+  }
+}
 
 export function is_direct_image_url(url: string): boolean {
   try {

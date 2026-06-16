@@ -28,3 +28,9 @@ dist-ssr
 # OS
 .DS_Store
 Thumbs.db
+
+# Testes — artefactos gerados
+test-results/
+testPlan/playwright-report/
+playwright-report/
+coverage/
