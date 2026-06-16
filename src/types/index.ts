@@ -26,6 +26,14 @@ export interface House {
   status: HouseStatus
   organizer_votes: number
   honorable_mention: boolean
+  house_city: string | null
+  house_tibia_name: string | null
+  house_wiki_slug: string | null
+  house_wiki_url: string | null
+  house_type: 'house' | 'guildhall' | null
+  map_x: number | null
+  map_y: number | null
+  map_z: number | null
   created_at: string
   updated_at: string
 }
@@ -67,7 +75,9 @@ export interface ContestDates {
 
 export interface HouseRegistrationForm {
   character_name: string
-  location: string
+  house_city: string
+  house_tibia_name: string
+  house_type: 'house' | 'guildhall'
   floor: string
   custom_name: string
   theme: string

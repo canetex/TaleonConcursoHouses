@@ -1,0 +1,9 @@
+ALTER TABLE houses
+  ADD COLUMN IF NOT EXISTS house_city TEXT,
+  ADD COLUMN IF NOT EXISTS house_tibia_name TEXT,
+  ADD COLUMN IF NOT EXISTS house_wiki_slug TEXT,
+  ADD COLUMN IF NOT EXISTS house_wiki_url TEXT,
+  ADD COLUMN IF NOT EXISTS house_type TEXT CHECK (house_type IN ('house', 'guildhall')),
+  ADD COLUMN IF NOT EXISTS map_x INTEGER,
+  ADD COLUMN IF NOT EXISTS map_y INTEGER,
+  ADD COLUMN IF NOT EXISTS map_z INTEGER;

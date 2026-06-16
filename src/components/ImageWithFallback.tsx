@@ -5,9 +5,10 @@ interface ImageWithFallbackProps {
   src: string
   alt: string
   className?: string
+  on_click?: (display_src: string) => void
 }
 
-export function ImageWithFallback({ src, alt, className }: ImageWithFallbackProps) {
+export function ImageWithFallback({ src, alt, className, on_click }: ImageWithFallbackProps) {
   const [display_src, set_display_src] = useState<string | null>(null)
   const [errored, set_errored] = useState(false)
   const [loading, set_loading] = useState(true)
@@ -82,7 +83,10 @@ export function ImageWithFallback({ src, alt, className }: ImageWithFallbackProp
     <img
       src={display_src}
       alt={alt}
-      className={className}
+      className={`${className ?? ''} ${on_click ? 'cursor-zoom-in' : ''}`.trim()}
+      onClick={() => {
+        if (display_src && on_click) on_click(display_src)
+      }}
       onLoad={() => {
         console.log('[ImageWithFallback] onLoad ok', { src, display_src })
       }}
