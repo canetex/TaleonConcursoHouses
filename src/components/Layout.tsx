@@ -33,14 +33,14 @@ export function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="relative border-b border-brand-olive/30 bg-tibia-panel/90 backdrop-blur sticky top-0 z-50 overflow-visible">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-          <Link to="/" className="relative flex items-center gap-3 min-w-0 pl-12 sm:pl-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+          <Link to="/" className="relative flex items-center min-w-0 shrink-0">
             <img
               src={CONTEST_LOGO_URL}
               alt={CONTEST_LOGO_ALT}
-              className="contest-logo-seal absolute left-0 top-full -translate-y-[58%] h-[4.25rem] w-[4.25rem] sm:h-[5.25rem] sm:w-[5.25rem] shrink-0 z-[60]"
+              className="contest-logo-seal absolute -left-1 sm:-left-4 top-full -translate-y-[58%] h-[4.25rem] w-[4.25rem] sm:h-[5.25rem] sm:w-[5.25rem] shrink-0 z-[60]"
             />
-            <div className="min-w-0 hidden sm:block">
+            <div className="min-w-0 hidden sm:block pl-[3.25rem] sm:pl-[4.75rem]">
               <h1 className="text-lg font-bold text-brand-cream leading-tight truncate">
                 Concurso de Decoração
               </h1>
