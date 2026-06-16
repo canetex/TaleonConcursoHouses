@@ -32,6 +32,7 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_ADMIN_DISCORD_IDS: ${{ secrets.VITE_ADMIN_DISCORD_IDS }}
+          VITE_DISCORD_CLIENT_ID: ${{ secrets.VITE_DISCORD_CLIENT_ID }}
 
       - name: SPA 404 fallback
         run: cp dist/index.html dist/404.html

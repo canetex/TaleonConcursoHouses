@@ -9,8 +9,15 @@ CREATE TABLE IF NOT EXISTS contest_users (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
-CREATE TYPE house_status AS ENUM ('pending', 'approved', 'rejected');
-CREATE TYPE vote_type AS ENUM ('match', 'dislike');
+DO $$ BEGIN
+  CREATE TYPE house_status AS ENUM ('pending', 'approved', 'rejected');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE vote_type AS ENUM ('match', 'dislike');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
 CREATE TABLE IF NOT EXISTS houses (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -48,3 +55,80 @@ CREATE TABLE IF NOT EXISTS contest_config (
   value TEXT NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+INSERT INTO contest_config (key, value) VALUES
+  ('registration_start', '2026-06-15T00:00:00Z'),
+  ('registration_end', '2026-06-30T00:00:00Z'),
+  ('validation_end', '2026-07-02T00:00:00Z'),
+  ('voting_end', '2026-07-17T00:00:00Z'),
+  ('admin_discord_ids', '1516151956291190884')
+ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now();
+
+CREATE OR REPLACE VIEW house_leaderboard AS
+WITH match_counts AS (
+  SELECT house_id, COUNT(*) FILTER (WHERE vote_type = 'match') AS total_matches
+  FROM house_votes
+  GROUP BY house_id
+),
+utility_ranked AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY (dummies_count + hirelings_count) DESC) AS utility_rank
+  FROM houses WHERE status = 'approved'
+),
+scored AS (
+  SELECT
+    h.id,
+    h.custom_name,
+    h.theme,
+    h.location,
+    h.character_name,
+    h.dummies_count,
+    h.hirelings_count,
+    h.organizer_votes,
+    h.honorable_mention,
+    h.screenshot_urls,
+    COALESCE(mc.total_matches, 0) AS total_matches,
+    FLOOR(COALESCE(mc.total_matches, 0)::numeric / 5) AS popular_points,
+    (h.organizer_votes * 2) AS organizer_points,
+    CASE
+      WHEN ur.utility_rank = 1 THEN 2
+      WHEN ur.utility_rank = 2 THEN 1
+      ELSE 0
+    END AS utility_bonus,
+    FLOOR(COALESCE(mc.total_matches, 0)::numeric / 5)
+      + (h.organizer_votes * 2)
+      + CASE WHEN ur.utility_rank = 1 THEN 2 WHEN ur.utility_rank = 2 THEN 1 ELSE 0 END
+      AS total_points
+  FROM houses h
+  LEFT JOIN match_counts mc ON mc.house_id = h.id
+  LEFT JOIN utility_ranked ur ON ur.id = h.id
+  WHERE h.status = 'approved'
+)
+SELECT * FROM scored ORDER BY total_points DESC, total_matches DESC;
+
+ALTER TABLE contest_users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE houses ENABLE ROW LEVEL SECURITY;
+ALTER TABLE house_votes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contest_config ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "contest_users_select" ON contest_users;
+DROP POLICY IF EXISTS "contest_users_insert" ON contest_users;
+DROP POLICY IF EXISTS "contest_users_update" ON contest_users;
+DROP POLICY IF EXISTS "houses_select" ON houses;
+DROP POLICY IF EXISTS "houses_insert" ON houses;
+DROP POLICY IF EXISTS "houses_update" ON houses;
+DROP POLICY IF EXISTS "house_votes_select" ON house_votes;
+DROP POLICY IF EXISTS "house_votes_insert" ON house_votes;
+DROP POLICY IF EXISTS "house_votes_update" ON house_votes;
+DROP POLICY IF EXISTS "contest_config_select" ON contest_config;
+
+CREATE POLICY "contest_users_select" ON contest_users FOR SELECT USING (true);
+CREATE POLICY "contest_users_insert" ON contest_users FOR INSERT WITH CHECK (true);
+CREATE POLICY "contest_users_update" ON contest_users FOR UPDATE USING (true);
+CREATE POLICY "houses_select" ON houses FOR SELECT USING (true);
+CREATE POLICY "houses_insert" ON houses FOR INSERT WITH CHECK (true);
+CREATE POLICY "houses_update" ON houses FOR UPDATE USING (true);
+CREATE POLICY "house_votes_select" ON house_votes FOR SELECT USING (true);
+CREATE POLICY "house_votes_insert" ON house_votes FOR INSERT WITH CHECK (true);
+CREATE POLICY "house_votes_update" ON house_votes FOR UPDATE USING (true);
+CREATE POLICY "contest_config_select" ON contest_config FOR SELECT USING (true);

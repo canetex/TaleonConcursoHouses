@@ -7,11 +7,13 @@ import {
   sign_in_with_discord,
   sign_out,
 } from '../lib/auth'
+import { get_discord_session, type DiscordSession } from '../lib/session'
 import type { ContestUser } from '../types'
 
 interface AuthState {
   session: Session | null
   user: User | null
+  discord_session: DiscordSession | null
   contest_user: ContestUser | null
   discord_id: string | null
   loading: boolean
@@ -21,28 +23,14 @@ export function useAuth() {
   const [state, set_state] = useState<AuthState>({
     session: null,
     user: null,
+    discord_session: null,
     contest_user: null,
     discord_id: null,
     loading: true,
   })
 
-  const sync_contest_user = useCallback(async (user: User) => {
-    const discord_id = get_discord_id_from_user(user)
-    if (!discord_id) return
-
-    const metadata = user.user_metadata ?? {}
-    const username =
-      (typeof metadata.full_name === 'string' ? metadata.full_name : null) ??
-      (typeof metadata.name === 'string' ? metadata.name : null) ??
-      user.email
-    const avatar =
-      typeof metadata.avatar_url === 'string' ? metadata.avatar_url : null
-
-    const contest_user = await upsert_contest_user(
-      discord_id,
-      username ?? null,
-      avatar,
-    )
+  const sync_contest_user = useCallback(async (discord_id: string, username: string | null, avatar: string | null) => {
+    await upsert_contest_user(discord_id, username, avatar)
 
     const { data } = await supabase
       .from('contest_users')
@@ -52,48 +40,79 @@ export function useAuth() {
 
     set_state((prev) => ({
       ...prev,
-      contest_user: data ?? contest_user,
+      contest_user: data,
       discord_id,
     }))
   }, [])
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      const user = session?.user ?? null
+    const stored = get_discord_session()
+
+    if (stored) {
       set_state((prev) => ({
         ...prev,
-        session,
-        user,
-        discord_id: user ? get_discord_id_from_user(user) : null,
+        discord_session: stored,
+        discord_id: stored.discord_id,
         loading: false,
       }))
-      if (user) sync_contest_user(user)
-    })
+      sync_contest_user(stored.discord_id, stored.discord_username, stored.discord_avatar)
+    } else {
+      set_state((prev) => ({ ...prev, loading: false }))
+    }
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        const user = session?.user ?? null
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      const user = session?.user ?? null
+      const discord_id = user ? get_discord_id_from_user(user) : null
+
+      if (discord_id && !stored) {
         set_state((prev) => ({
           ...prev,
           session,
           user,
-          discord_id: user ? get_discord_id_from_user(user) : null,
-          loading: false,
+          discord_id,
         }))
-        if (user) await sync_contest_user(user)
-        else {
-          set_state((prev) => ({ ...prev, contest_user: null, discord_id: null }))
-        }
-      },
-    )
+        const metadata = user?.user_metadata ?? {}
+        const username =
+          (typeof metadata.full_name === 'string' ? metadata.full_name : null) ??
+          (typeof metadata.name === 'string' ? metadata.name : null) ??
+          user?.email ??
+          null
+        const avatar = typeof metadata.avatar_url === 'string' ? metadata.avatar_url : null
+        sync_contest_user(discord_id, username, avatar)
+      }
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const user = session?.user ?? null
+      const discord_id = user ? get_discord_id_from_user(user) : null
+
+      set_state((prev) => ({
+        ...prev,
+        session,
+        user,
+        discord_id: prev.discord_id ?? discord_id,
+      }))
+    })
 
     return () => subscription.unsubscribe()
   }, [sync_contest_user])
 
+  const logout = async () => {
+    await sign_out()
+    set_state({
+      session: null,
+      user: null,
+      discord_session: null,
+      contest_user: null,
+      discord_id: null,
+      loading: false,
+    })
+  }
+
   return {
     ...state,
-    is_authenticated: !!state.session,
+    is_authenticated: !!state.discord_id,
     login: sign_in_with_discord,
-    logout: sign_out,
+    logout,
   }
 }
