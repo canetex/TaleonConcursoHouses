@@ -1,5 +1,7 @@
 import { supabase } from './supabase'
 
+export const HOUSE_IMAGE_PLACEHOLDER_URL = 'https://i.redd.it/vwhos583l2d91.png'
+
 const DIRECT_IMAGE_PATTERN = /\.(png|jpe?g|gif|webp|bmp)(\?.*)?$/i
 const BLOCKED_URL_PATTERN = /^(data:|javascript:)/i
 const ALLOWED_IMAGE_HOSTS = new Set(['i.imgur.com', 'imgur.com'])

@@ -1,15 +1,65 @@
 @import "tailwindcss";
 
 @theme {
-  --color-tibia-gold: #c9a227;
-  --color-tibia-dark: #1a1208;
-  --color-tibia-panel: #2d2318;
-  --color-tibia-accent: #8b6914;
-  --color-tibia-green: #4a7c3f;
-  --color-tibia-red: #8b2e2e;
+  /* ── Paleta principal ── */
+  --color-brand-black: #040300;
+  --color-brand-brandy: #75371e;
+  --color-brand-olive: #776a54;
+  --color-brand-cream: #e9e4c2;
+  --color-brand-smoke: #f6f5f3;
+
+  /* ── Superfícies e acentos (compat. tibia-*) ── */
+  --color-tibia-dark: #040300;
+  --color-tibia-panel: #141210;
+  --color-tibia-gold: #e9e4c2;
+  --color-tibia-accent: #75371e;
+  --color-tibia-green: #5c6b52;
+  --color-tibia-red: #8b4428;
+
+  /* ── Escala warm (substitui amber em todo o UI) ── */
+  --color-amber-50: #f6f5f3;
+  --color-amber-100: #efe9d4;
+  --color-amber-200: #e9e4c2;
+  --color-amber-300: #d4cdb0;
+  --color-amber-400: #b8a98a;
+  --color-amber-500: #776a54;
+  --color-amber-600: #75371e;
+  --color-amber-700: #5c2c18;
+  --color-amber-800: #3a2f24;
+  --color-amber-900: #1c1914;
+  --color-amber-950: #040300;
+
+  /* ── Estados (harmonizados com a paleta) ── */
+  --color-green-300: #a3b294;
+  --color-green-400: #8a9a7a;
+  --color-green-500: #6d7f5e;
+  --color-green-700: #4a5644;
+  --color-green-800: #3d4638;
+  --color-red-300: #c9856a;
+  --color-red-400: #a85c3a;
+  --color-red-500: #8b4428;
+  --color-red-800: #4a2214;
 }
 
 body {
-  @apply bg-tibia-dark text-amber-50 min-h-screen;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  @apply min-h-screen text-brand-smoke antialiased;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background-color: var(--color-brand-black);
+  background-image:
+    radial-gradient(
+      ellipse 110% 70% at 50% -15%,
+      color-mix(in srgb, var(--color-brand-brandy) 22%, transparent),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      #0a0907 0%,
+      var(--color-brand-black) 42%,
+      color-mix(in srgb, var(--color-brand-olive) 12%, var(--color-brand-black)) 100%
+    );
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-brand-brandy) 50%, var(--color-brand-black));
+  color: var(--color-brand-smoke);
 }

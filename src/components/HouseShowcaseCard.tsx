@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ImageWithFallback } from './ImageWithFallback'
+import { HouseImagePlaceholder } from './HouseImagePlaceholder'
 import { ImageLightbox } from './ImageLightbox'
 import { ShareHouseModal } from './ShareHouseModal'
 import { HouseMinimap } from './HouseMinimap'
@@ -69,12 +70,13 @@ export function HouseShowcaseCard({
     <>
       <div className="bg-tibia-panel rounded-2xl border border-amber-800/30 overflow-hidden">
         {images.length > 0 ? (
-          <div className="relative bg-black/40 min-h-[240px] max-h-[70vh] flex items-center justify-center">
+          <div className="relative bg-black/40 min-h-[240px] max-h-[70vh] w-full overflow-hidden">
             <ImageWithFallback
               src={images[image_index]}
               alt={house.custom_name}
-              className="w-full max-h-[70vh] object-contain"
+              className="absolute inset-0 w-full h-full object-contain"
               on_click={(display_src) => set_lightbox_src(display_src)}
+              placeholder_subtitle={house.theme ? `"${house.theme}"` : undefined}
             />
             <p className="absolute bottom-2 right-3 text-[10px] text-amber-200/40 pointer-events-none">
               Clique para ampliar
@@ -104,7 +106,11 @@ export function HouseShowcaseCard({
             )}
           </div>
         ) : (
-          <div className="aspect-video flex items-center justify-center text-8xl bg-tibia-dark">🏠</div>
+          <HouseImagePlaceholder
+            label={house.custom_name}
+            subtitle={house.theme ? `"${house.theme}"` : 'Sem screenshots'}
+            className="aspect-video w-full min-h-[240px] max-h-[70vh]"
+          />
         )}
 
         <div className="p-6">

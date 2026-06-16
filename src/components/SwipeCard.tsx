@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useSwipeable } from 'react-swipeable'
 import { Link } from 'react-router-dom'
 import { ImageWithFallback } from './ImageWithFallback'
+import { HouseImagePlaceholder } from './HouseImagePlaceholder'
 import type { House, VoteType } from '../types'
 
 interface SwipeCardProps {
@@ -48,22 +49,23 @@ export function SwipeCard({ house, current_vote, on_vote }: SwipeCardProps) {
         style={{ transform, opacity: swipe_direction ? 0.5 : 1 }}
       >
         {swipe_offset > 50 && (
-          <div className="absolute top-6 left-6 z-10 px-4 py-2 rounded-lg border-4 border-green-500 text-green-500 font-bold text-2xl rotate-[-15deg]">
+          <div className="absolute top-6 left-6 z-10 px-4 py-2 rounded-lg border-4 border-tibia-green text-tibia-green font-bold text-2xl rotate-[-15deg]">
             MATCH
           </div>
         )}
         {swipe_offset < -50 && (
-          <div className="absolute top-6 right-6 z-10 px-4 py-2 rounded-lg border-4 border-red-500 text-red-500 font-bold text-2xl rotate-[15deg]">
+          <div className="absolute top-6 right-6 z-10 px-4 py-2 rounded-lg border-4 border-brand-brandy text-brand-brandy font-bold text-2xl rotate-[15deg]">
             NOPE
           </div>
         )}
 
         {images.length > 0 ? (
-          <div className="aspect-[3/4] relative bg-black/40">
+          <div className="aspect-[3/4] relative bg-black/40 overflow-hidden">
             <ImageWithFallback
               src={images[image_index]}
               alt={house.custom_name}
-              className="w-full h-full object-cover pointer-events-none"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              placeholder_subtitle={house.theme ? `"${house.theme}"` : undefined}
             />
             {images.length > 1 && (
               <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
@@ -78,9 +80,11 @@ export function SwipeCard({ house, current_vote, on_vote }: SwipeCardProps) {
             )}
           </div>
         ) : (
-          <div className="aspect-[3/4] flex items-center justify-center text-8xl bg-tibia-dark">
-            🏠
-          </div>
+          <HouseImagePlaceholder
+            label={house.custom_name}
+            subtitle={house.theme ? `"${house.theme}"` : 'Sem screenshots'}
+            className="aspect-[3/4] w-full"
+          />
         )}
 
         <div className="p-5">

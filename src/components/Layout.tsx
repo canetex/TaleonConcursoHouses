@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth'
 import { usePhase } from '../hooks/usePhase'
 import { phase_labels } from '../lib/phases'
 import { is_admin, format_discord_avatar } from '../lib/auth'
+import { CONTEST_LOGO_ALT, CONTEST_LOGO_URL } from '../lib/assets'
 import { TaleonSanLink, TheCrustyLink } from '../lib/links'
 
 export function Layout() {
@@ -22,8 +23,8 @@ export function Layout() {
   const nav_link_class = (path: string) =>
     `px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
       location.pathname === path || location.pathname.startsWith(path + '/')
-        ? 'bg-tibia-accent text-amber-50'
-        : 'text-amber-200/70 hover:text-amber-50 hover:bg-tibia-panel'
+        ? 'bg-brand-brandy text-brand-smoke shadow-sm'
+        : 'text-brand-cream/70 hover:text-brand-smoke hover:bg-tibia-panel'
     }`
 
   const avatar_url = discord_session?.discord_avatar
@@ -31,15 +32,19 @@ export function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b border-amber-900/40 bg-tibia-panel/80 backdrop-blur sticky top-0 z-50">
+      <header className="border-b border-brand-olive/30 bg-tibia-panel/90 backdrop-blur sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl">🏠</span>
-            <div>
-              <h1 className="text-lg font-bold text-tibia-gold leading-tight">
+          <Link to="/" className="flex items-center gap-3 min-w-0">
+            <img
+              src={CONTEST_LOGO_URL}
+              alt={CONTEST_LOGO_ALT}
+              className="h-11 w-11 sm:h-12 sm:w-12 shrink-0 object-contain drop-shadow-md"
+            />
+            <div className="min-w-0 hidden sm:block">
+              <h1 className="text-lg font-bold text-brand-cream leading-tight truncate">
                 Concurso de Decoração
               </h1>
-              <p className="text-xs text-amber-200/60">
+              <p className="text-xs text-amber-200/60 truncate">
                 <TaleonSanLink className="text-amber-200/60" /> · <TheCrustyLink className="text-amber-200/60" />
               </p>
             </div>
@@ -57,7 +62,7 @@ export function Layout() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline text-xs px-2 py-1 rounded-full bg-tibia-accent/30 text-amber-200 border border-amber-800/40">
+            <span className="hidden sm:inline text-xs px-2 py-1 rounded-full bg-brand-brandy/25 text-brand-cream border border-brand-olive/40">
               {phase_labels[phase]}
             </span>
             {is_authenticated ? (
@@ -91,9 +96,9 @@ export function Layout() {
         <Outlet />
       </main>
 
-      <footer className="border-t border-amber-900/40 bg-tibia-panel/50 py-4 text-center text-xs text-amber-200/50">
-        Organizado por <TheCrustyLink className="text-tibia-gold font-semibold" /> ·{' '}
-        <TaleonSanLink className="text-amber-200/50" />
+      <footer className="border-t border-brand-olive/30 bg-tibia-panel/60 py-4 text-center text-xs text-brand-olive/80">
+        Organizado por <TheCrustyLink className="text-brand-cream font-semibold" /> ·{' '}
+        <TaleonSanLink className="text-brand-olive/80" />
       </footer>
     </div>
   )

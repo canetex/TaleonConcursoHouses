@@ -34,3 +34,5 @@ test-results/
 testPlan/playwright-report/
 playwright-report/
 coverage/
+.edge-deploy/
+.tmp-*.json

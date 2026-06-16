@@ -15,7 +15,6 @@ import {
   get_houses_by_city,
 } from '../lib/tibia-houses-catalog'
 import { fetch_house_coords } from '../lib/tibia-houses'
-import { HouseSearchSelect } from '../components/HouseSearchSelect'
 import type { House, HouseRegistrationForm } from '../types'
 
 const empty_form: HouseRegistrationForm = {
@@ -37,11 +36,24 @@ const status_labels: Record<House['status'], string> = {
   rejected: 'Rejeitada',
 }
 
+function parse_legacy_location(location: string): { house_city: string; house_tibia_name: string } | null {
+  const comma_index = location.lastIndexOf(', ')
+  if (comma_index <= 0) return null
+  return {
+    house_tibia_name: location.slice(0, comma_index).trim(),
+    house_city: location.slice(comma_index + 2).trim(),
+  }
+}
+
 function house_to_form(house: House): HouseRegistrationForm {
+  const legacy = !house.house_city || !house.house_tibia_name
+    ? parse_legacy_location(house.location)
+    : null
+
   return {
     character_name: house.character_name,
-    house_city: house.house_city ?? '',
-    house_tibia_name: house.house_tibia_name ?? '',
+    house_city: house.house_city ?? legacy?.house_city ?? '',
+    house_tibia_name: house.house_tibia_name ?? legacy?.house_tibia_name ?? '',
     house_type: house.house_type ?? 'house',
     floor: house.floor,
     custom_name: house.custom_name,
@@ -374,17 +386,24 @@ export function RegisterPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm text-amber-200/70 mb-1">Casa / Guildhall *</label>
-            <HouseSearchSelect
-              houses={available_houses}
+            <select
               value={form.house_tibia_name}
-              on_change={(house_name) => update_field('house_tibia_name', house_name)}
+              onChange={(e) => update_field('house_tibia_name', e.target.value)}
               disabled={!form.house_city}
-              placeholder={
-                form.house_city
-                  ? `Pesquisar ${form.house_type === 'guildhall' ? 'guildhall' : 'casa'}...`
-                  : 'Selecione a cidade primeiro'
-              }
-            />
+              className="w-full px-3 py-2 rounded-lg bg-tibia-dark border border-amber-800/40 text-amber-50 focus:outline-none focus:border-tibia-gold disabled:opacity-50"
+              required
+            >
+              <option value="">
+                {form.house_city
+                  ? `Selecione a ${form.house_type === 'guildhall' ? 'guildhall' : 'casa'}`
+                  : 'Selecione a cidade primeiro'}
+              </option>
+              {available_houses.map((house) => (
+                <option key={house.wiki_slug} value={house.name}>
+                  {house.name}
+                </option>
+              ))}
+            </select>
             <p className="text-[10px] text-amber-200/40 mt-1">
               Lista baseada no{' '}
               <a
@@ -395,6 +414,7 @@ export function RegisterPage() {
               >
                 Tibia Wiki
               </a>
+              {form.house_city && ` — ${available_houses.length} opções`}
             </p>
           </div>
           <div>

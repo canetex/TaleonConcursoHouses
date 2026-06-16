@@ -15,7 +15,7 @@ import {
   sign_in_with_discord,
   sign_out,
 } from '../lib/auth'
-import { get_discord_session, set_discord_session, type DiscordSession } from '../lib/session'
+import { get_discord_session, set_discord_session, clear_discord_session, type DiscordSession } from '../lib/session'
 import type { ContestUser } from '../types'
 
 interface AuthState {
@@ -84,6 +84,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const stored = read_stored_session()
 
     if (stored) {
+      if (!stored.session_token) {
+        clear_discord_session()
+        set_state((prev) => ({ ...prev, loading: false }))
+        return
+      }
+
       set_state((prev) => ({
         ...prev,
         discord_session: stored,
@@ -149,7 +155,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = useMemo<AuthContextValue>(
     () => ({
       ...state,
-      is_authenticated: !!state.discord_id,
+      is_authenticated: !!(state.discord_session?.session_token && state.discord_id),
       login: sign_in_with_discord,
       logout,
       apply_discord_session,

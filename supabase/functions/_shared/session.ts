@@ -63,11 +63,35 @@ export async function verify_session_token(token: string): Promise<string | null
   }
 }
 
-export async function discord_id_from_request(req: Request, body?: Record<string, unknown>): Promise<string | null> {
-  const auth = req.headers.get("authorization");
+export function is_supabase_jwt(token: string): boolean {
+  return token.split(".").length === 3;
+}
+
+export function collect_session_token_candidates(
+  req: Request,
+  body?: Record<string, unknown>,
+): string[] {
+  const candidates: string[] = [];
+
   const header_token = req.headers.get("x-contest-session");
+  if (header_token) candidates.push(header_token);
+
   const body_token = typeof body?.session_token === "string" ? body.session_token : null;
-  const token = auth?.startsWith("Bearer ") ? auth.slice(7) : header_token ?? body_token;
-  if (!token) return null;
-  return verify_session_token(token);
+  if (body_token) candidates.push(body_token);
+
+  const auth = req.headers.get("authorization");
+  if (auth?.startsWith("Bearer ")) {
+    const bearer = auth.slice(7);
+    if (!is_supabase_jwt(bearer)) candidates.push(bearer);
+  }
+
+  return [...new Set(candidates)];
+}
+
+export async function discord_id_from_request(req: Request, body?: Record<string, unknown>): Promise<string | null> {
+  for (const token of collect_session_token_candidates(req, body)) {
+    const discord_id = await verify_session_token(token);
+    if (discord_id) return discord_id;
+  }
+  return null;
 }

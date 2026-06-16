@@ -54,8 +54,7 @@ test.describe('Utilizador logado — bypass Discord', () => {
     await expect(page.getByText(/Personagem válido/i)).toBeVisible({ timeout: 10_000 })
 
     await page.locator('select').nth(1).selectOption('Thais')
-    await page.getByPlaceholder(/Pesquisar casa/i).fill('Alai Flats, Flat 01')
-    await page.getByPlaceholder(/Pesquisar casa/i).blur()
+    await page.locator('select').nth(2).selectOption('Alai Flats, Flat 01')
 
     await page.getByPlaceholder(/1º andar/i).fill('1')
     await page.getByPlaceholder(/Batize sua obra/i).fill('Nova Casa E2E')

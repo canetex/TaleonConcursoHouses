@@ -36,6 +36,13 @@ describe('S05 — edge functions do projeto', () => {
     }
   })
 
+  it('session ignora JWT do Supabase no Authorization e prioriza x-contest-session', () => {
+    const source = readFileSync(join(FUNCTIONS_DIR, '_shared/session.ts'), 'utf8')
+    expect(source).toMatch(/x-contest-session/)
+    expect(source).toMatch(/is_supabase_jwt/)
+    expect(source).not.toMatch(/auth\?\.startsWith\("Bearer "\) \? auth\.slice\(7\) : header_token/)
+  })
+
   it('lista todas as edge functions do projeto', () => {
     const names = readdirSync(FUNCTIONS_DIR, { withFileTypes: true })
       .filter((d) => d.isDirectory() && d.name !== '_shared')

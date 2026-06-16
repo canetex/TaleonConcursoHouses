@@ -1,14 +1,22 @@
 import { useState, useEffect } from 'react'
 import { is_direct_image_url, normalize_image_url, resolve_image_url } from '../lib/images'
+import { HouseImagePlaceholder } from './HouseImagePlaceholder'
 
 interface ImageWithFallbackProps {
   src: string
   alt: string
   className?: string
   on_click?: (display_src: string) => void
+  placeholder_subtitle?: string
 }
 
-export function ImageWithFallback({ src, alt, className, on_click }: ImageWithFallbackProps) {
+export function ImageWithFallback({
+  src,
+  alt,
+  className,
+  on_click,
+  placeholder_subtitle,
+}: ImageWithFallbackProps) {
   const [display_src, set_display_src] = useState<string | null>(null)
   const [errored, set_errored] = useState(false)
   const [loading, set_loading] = useState(true)
@@ -28,12 +36,9 @@ export function ImageWithFallback({ src, alt, className, on_click }: ImageWithFa
         return
       }
 
-      console.log('[ImageWithFallback] resolving', { src: trimmed })
-
       const quick = normalize_image_url(trimmed)
       if (is_direct_image_url(quick)) {
         if (!cancelled) {
-          console.log('[ImageWithFallback] using direct url', { display_src: quick })
           set_display_src(quick)
           set_loading(false)
         }
@@ -44,17 +49,15 @@ export function ImageWithFallback({ src, alt, className, on_click }: ImageWithFa
       if (cancelled) return
 
       if (resolved) {
-        console.log('[ImageWithFallback] using resolved url', { display_src: resolved })
         set_display_src(resolved)
       } else {
-        console.warn('[ImageWithFallback] could not resolve url', { src: trimmed })
         set_errored(true)
       }
 
       set_loading(false)
     }
 
-    load()
+    void load()
 
     return () => {
       cancelled = true
@@ -63,19 +66,20 @@ export function ImageWithFallback({ src, alt, className, on_click }: ImageWithFa
 
   if (loading) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-tibia-dark text-amber-200/40 text-xs">
-        A carregar imagem...
-      </div>
+      <HouseImagePlaceholder
+        label="A carregar imagem..."
+        className={className ?? 'w-full h-full min-h-[240px]'}
+      />
     )
   }
 
   if (errored || !display_src) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-tibia-dark text-amber-200/40">
-        <span className="text-5xl">🏠</span>
-        <span className="text-xs px-3 text-center">Imagem indisponível</span>
-        <span className="text-[10px] px-3 text-center text-amber-200/30 break-all">{src}</span>
-      </div>
+      <HouseImagePlaceholder
+        label={alt}
+        subtitle={placeholder_subtitle ?? 'Imagem indisponível'}
+        className={className ?? 'w-full h-full min-h-[240px]'}
+      />
     )
   }
 
@@ -87,13 +91,7 @@ export function ImageWithFallback({ src, alt, className, on_click }: ImageWithFa
       onClick={() => {
         if (display_src && on_click) on_click(display_src)
       }}
-      onLoad={() => {
-        console.log('[ImageWithFallback] onLoad ok', { src, display_src })
-      }}
-      onError={() => {
-        console.log('[ImageWithFallback] onError', { src, display_src })
-        set_errored(true)
-      }}
+      onError={() => set_errored(true)}
     />
   )
 }
