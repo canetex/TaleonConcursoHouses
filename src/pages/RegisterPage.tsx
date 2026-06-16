@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import { usePhase } from '../hooks/usePhase'
 import { can_register } from '../lib/phases'
 import { validate_character } from '../lib/character'
-import { normalize_image_url } from '../lib/images'
+import { normalize_image_url, resolve_image_url } from '../lib/images'
 import type { HouseRegistrationForm } from '../types'
 
 const empty_form: HouseRegistrationForm = {
@@ -87,14 +87,15 @@ export function RegisterPage() {
       }
     }
 
-    const screenshot_urls = form.screenshot_urls
-      .map((url) => normalize_image_url(url.trim()))
-      .filter(Boolean)
+    const raw_urls = form.screenshot_urls.map((url) => url.trim()).filter(Boolean)
+    const screenshot_urls = (
+      await Promise.all(raw_urls.map((url) => resolve_image_url(url)))
+    ).filter((url): url is string => !!url)
 
-    console.log('[RegisterPage] submit screenshot_urls', screenshot_urls)
+    console.log('[RegisterPage] submit screenshot_urls', { raw_urls, screenshot_urls })
 
     if (screenshot_urls.length === 0) {
-      set_error('Adicione pelo menos uma URL de screenshot.')
+      set_error('Não foi possível resolver nenhuma URL de screenshot. Use link direto da imagem ou álbum Imgur válido.')
       return
     }
 
@@ -336,16 +337,43 @@ export function RegisterPage() {
 }
 
 function ScreenshotPreview({ url }: { url: string }) {
-  const trimmed = normalize_image_url(url.trim())
+  const trimmed = url.trim()
+  const [display_src, set_display_src] = useState<string | null>(null)
   const [status, set_status] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle')
 
   useEffect(() => {
+    let cancelled = false
+
     if (!trimmed) {
       set_status('idle')
+      set_display_src(null)
       return
     }
-    console.log('[ScreenshotPreview] start loading', { url: trimmed })
-    set_status('loading')
+
+    async function load() {
+      console.log('[ScreenshotPreview] start loading', { url: trimmed })
+      set_status('loading')
+      set_display_src(null)
+
+      const quick = normalize_image_url(trimmed)
+      const resolved = await resolve_image_url(trimmed)
+      if (cancelled) return
+
+      if (resolved) {
+        console.log('[ScreenshotPreview] resolved ok', { url: trimmed, resolved })
+        set_display_src(resolved)
+        set_status('ok')
+      } else {
+        console.warn('[ScreenshotPreview] resolve failed', { url: trimmed, quick })
+        set_status('error')
+      }
+    }
+
+    load()
+
+    return () => {
+      cancelled = true
+    }
   }, [trimmed])
 
   if (!trimmed) return null
@@ -358,23 +386,24 @@ function ScreenshotPreview({ url }: { url: string }) {
         </p>
       ) : (
         <div className="relative inline-block">
-          <img
-            src={trimmed}
-            alt="Pré-visualização"
-            onLoad={() => {
-              console.log('[ScreenshotPreview] onLoad ok', { url: trimmed })
-              set_status('ok')
-            }}
-            onError={() => {
-              console.log('[ScreenshotPreview] onError', { url: trimmed })
-              set_status('error')
-            }}
-            className={`max-h-40 rounded-lg border border-amber-800/40 object-contain bg-black/40 ${
-              status === 'ok' ? 'opacity-100' : 'opacity-0 h-0'
-            }`}
-          />
           {status === 'loading' && (
-            <p className="text-xs text-amber-200/50">A carregar pré-visualização...</p>
+            <p className="text-xs text-amber-200/50">A resolver e carregar pré-visualização...</p>
+          )}
+          {display_src && (
+            <img
+              src={display_src}
+              alt="Pré-visualização"
+              onLoad={() => {
+                console.log('[ScreenshotPreview] onLoad ok', { url: trimmed, display_src })
+              }}
+              onError={() => {
+                console.log('[ScreenshotPreview] onError', { url: trimmed, display_src })
+                set_status('error')
+              }}
+              className={`max-h-40 rounded-lg border border-amber-800/40 object-contain bg-black/40 ${
+                status === 'ok' ? 'opacity-100' : 'opacity-0 h-0'
+              }`}
+            />
           )}
           {status === 'ok' && (
             <span className="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-green-700/80 text-green-50 text-[10px]">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { normalize_image_url } from '../lib/images'
+import { is_direct_image_url, normalize_image_url, resolve_image_url } from '../lib/images'
 
 interface ImageWithFallbackProps {
   src: string
@@ -8,33 +8,86 @@ interface ImageWithFallbackProps {
 }
 
 export function ImageWithFallback({ src, alt, className }: ImageWithFallbackProps) {
+  const [display_src, set_display_src] = useState<string | null>(null)
   const [errored, set_errored] = useState(false)
-  const normalized_src = normalize_image_url(src)
+  const [loading, set_loading] = useState(true)
 
   useEffect(() => {
-    set_errored(false)
-    console.log('[ImageWithFallback] src changed', { src, normalized_src })
-  }, [src, normalized_src])
+    let cancelled = false
 
-  if (errored) {
+    async function load() {
+      set_loading(true)
+      set_errored(false)
+      set_display_src(null)
+
+      const trimmed = src.trim()
+      if (!trimmed) {
+        set_loading(false)
+        set_errored(true)
+        return
+      }
+
+      console.log('[ImageWithFallback] resolving', { src: trimmed })
+
+      const quick = normalize_image_url(trimmed)
+      if (is_direct_image_url(quick)) {
+        if (!cancelled) {
+          console.log('[ImageWithFallback] using direct url', { display_src: quick })
+          set_display_src(quick)
+          set_loading(false)
+        }
+        return
+      }
+
+      const resolved = await resolve_image_url(trimmed)
+      if (cancelled) return
+
+      if (resolved) {
+        console.log('[ImageWithFallback] using resolved url', { display_src: resolved })
+        set_display_src(resolved)
+      } else {
+        console.warn('[ImageWithFallback] could not resolve url', { src: trimmed })
+        set_errored(true)
+      }
+
+      set_loading(false)
+    }
+
+    load()
+
+    return () => {
+      cancelled = true
+    }
+  }, [src])
+
+  if (loading) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-tibia-dark text-amber-200/40 text-xs">
+        A carregar imagem...
+      </div>
+    )
+  }
+
+  if (errored || !display_src) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-tibia-dark text-amber-200/40">
         <span className="text-5xl">🏠</span>
         <span className="text-xs px-3 text-center">Imagem indisponível</span>
+        <span className="text-[10px] px-3 text-center text-amber-200/30 break-all">{src}</span>
       </div>
     )
   }
 
   return (
     <img
-      src={normalized_src}
+      src={display_src}
       alt={alt}
       className={className}
       onLoad={() => {
-        console.log('[ImageWithFallback] onLoad ok', { src, normalized_src })
+        console.log('[ImageWithFallback] onLoad ok', { src, display_src })
       }}
       onError={() => {
-        console.log('[ImageWithFallback] onError', { src, normalized_src })
+        console.log('[ImageWithFallback] onError', { src, display_src })
         set_errored(true)
       }}
     />

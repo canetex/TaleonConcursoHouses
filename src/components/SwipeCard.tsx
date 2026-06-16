@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useSwipeable } from 'react-swipeable'
 import { Link } from 'react-router-dom'
+import { ImageWithFallback } from './ImageWithFallback'
 import type { House, VoteType } from '../types'
 
 interface SwipeCardProps {
@@ -59,11 +60,10 @@ export function SwipeCard({ house, current_vote, on_vote }: SwipeCardProps) {
 
         {images.length > 0 ? (
           <div className="aspect-[3/4] relative bg-black/40">
-            <img
+            <ImageWithFallback
               src={images[image_index]}
               alt={house.custom_name}
               className="w-full h-full object-cover pointer-events-none"
-              draggable={false}
             />
             {images.length > 1 && (
               <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">

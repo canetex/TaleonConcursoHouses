@@ -46,18 +46,23 @@ export function usePhase() {
         db_admins,
       })
 
-      set_dates(contest_dates)
-      set_phase(get_current_phase(contest_dates))
       const merged_admins = [...new Set([...env_admins, ...db_admins])]
       console.log('[usePhase] merged admin_ids', merged_admins)
+
+      set_dates(contest_dates)
+      set_phase(get_current_phase(contest_dates))
       set_admin_ids(merged_admins)
       set_loading(false)
     }
 
     load_config()
+  }, [])
+
+  useEffect(() => {
+    if (!dates) return
 
     const interval = setInterval(() => {
-      if (dates) set_phase(get_current_phase(dates))
+      set_phase(get_current_phase(dates))
     }, 60_000)
 
     return () => clearInterval(interval)
