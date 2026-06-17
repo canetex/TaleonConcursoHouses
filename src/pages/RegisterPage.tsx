@@ -505,12 +505,11 @@ export function RegisterPage() {
               className="w-full px-3 py-2 rounded-lg bg-tibia-dark border border-amber-800/40 text-amber-50 focus:outline-none focus:border-tibia-gold"
             />
           </div>
+          <p className="col-span-2 text-sm text-amber-200/70 leading-relaxed">
+            Quantos estão disponíveis para uso na casa? Não precisam estar no mesmo andar que está
+            concorrendo na decoração.
+          </p>
         </div>
-
-        <p className="text-xs text-amber-200/50 -mt-2">
-          Quantos estão disponíveis para uso na casa? Não precisam estar no mesmo andar que está
-          concorrendo na decoração.
-        </p>
 
         <div>
           <label className="block text-sm text-amber-200/70 mb-1">URLs de Screenshots *</label>
