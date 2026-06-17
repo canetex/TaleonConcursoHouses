@@ -5,6 +5,7 @@ import { create_admin_client } from "../_shared/supabase-admin.ts";
 import { assert_registration_open } from "../_shared/phases.ts";
 import { clamp_house_counts, validate_screenshot_urls } from "../_shared/validation.ts";
 import { check_rate_limit } from "../_shared/rate-limit.ts";
+import { should_reset_approved_to_pending } from "../_shared/house-guards.ts";
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return options_response();
@@ -64,14 +65,17 @@ Deno.serve(async (req: Request) => {
 
     const { data: existing } = await supabase
       .from("houses")
-      .select("id, status, discord_user_id")
+      .select(
+        "id, status, discord_user_id, character_name, house_tibia_name, house_city, house_wiki_slug, screenshot_urls",
+      )
       .eq("discord_user_id", discord_id)
       .maybeSingle();
 
     if (existing) {
+      const reset_to_pending = should_reset_approved_to_pending(existing.status, existing, payload);
       const update_payload = {
         ...payload,
-        ...(existing.status === "rejected" ? { status: "pending" as const } : {}),
+        ...(existing.status === "rejected" || reset_to_pending ? { status: "pending" as const } : {}),
       };
 
       const { data, error } = await supabase

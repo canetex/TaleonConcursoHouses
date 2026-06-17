@@ -18,14 +18,34 @@ Deno.serve(async (req: Request) => {
 
     const house_id = typeof body.house_id === "string" ? body.house_id : "";
     const vote_type = body.vote_type === "dislike" ? "dislike" : body.vote_type === "match" ? "match" : null;
-    const voter_character = typeof body.voter_character === "string" ? body.voter_character.trim() : "";
 
-    if (!house_id || !vote_type || !voter_character) {
-      return json_response({ error: "house_id, vote_type e voter_character são obrigatórios" }, 400);
+    if (!house_id || !vote_type) {
+      return json_response({ error: "house_id e vote_type são obrigatórios" }, 400);
     }
 
     const supabase = create_admin_client();
     await assert_voting_open(supabase);
+
+    const { data: contest_user, error: user_error } = await supabase
+      .from("contest_users")
+      .select("validated_character")
+      .eq("discord_id", discord_id)
+      .maybeSingle();
+
+    if (user_error) {
+      return json_response({ error: user_error.message }, 400);
+    }
+
+    const voter_character = typeof contest_user?.validated_character === "string"
+      ? contest_user.validated_character.trim()
+      : "";
+
+    if (!voter_character) {
+      return json_response(
+        { error: "Valide o seu personagem no portal antes de votar" },
+        403,
+      );
+    }
 
     const { data: house, error: house_error } = await supabase
       .from("houses")

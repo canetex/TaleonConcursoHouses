@@ -65,10 +65,22 @@ export function VotePage() {
 
   const handle_validate_character = async () => {
     set_validating(true)
-    const valid = await validate_character(voter_character)
+    const trimmed = voter_character.trim()
+    const valid = await validate_character(trimmed)
     set_character_valid(valid)
     set_validating(false)
-    if (valid) set_character_confirmed(true)
+    if (!valid) return
+
+    const { error } = await invoke_with_session('update-profile', {
+      validated_character: trimmed,
+    })
+
+    if (error) {
+      set_character_valid(false)
+      return
+    }
+
+    set_character_confirmed(true)
   }
 
   const handle_vote = async (house_id: string, vote_type: VoteType) => {
@@ -77,7 +89,6 @@ export function VotePage() {
     const { error } = await invoke_with_session('cast-vote', {
       house_id,
       vote_type,
-      voter_character: voter_character.trim(),
     })
 
     if (!error) {

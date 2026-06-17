@@ -1,7 +1,7 @@
 # Status dos Testes — Taleon Concurso Houses
 
-**Data:** 2026-06-17  
-**Fase:** 4 — Auth + fase server-side  
+**Data:** 2026-06-18  
+**Fase:** 5 — Fase 3 (golpes de negócio + ranking + imagens)  
 **Pasta de testes:** `/tests/`
 
 ---
@@ -10,12 +10,12 @@
 
 | Suite | Passou | Falhou | Skip | Total |
 |-------|--------|--------|------|-------|
-| Unitários (Vitest) | 32 | 0 | 0 | 32 |
-| Segurança (Vitest) | **26** | 0 | 0 | 26 |
+| Unitários (Vitest) | 40 | 0 | 0 | 40 |
+| Segurança (Vitest) | **30** | 0 | 0 | 30 |
 | E2E (Playwright) | **18** | 0 | 0 | 18 |
-| **Total** | **77** | **0** | **0** | **77** |
+| **Total** | **88** | **0** | **0** | **88** |
 
-Todas as vulnerabilidades documentadas na fase 2 foram mitigadas via migration RLS + Edge Functions com sessão HMAC.
+Todas as vulnerabilidades documentadas na fase 2 foram mitigadas via migration RLS + Edge Functions com sessão HMAC. A **Fase 3** fechou golpes de negócio (bait-and-switch, voto fantasma), corrigiu empates no ranking (`DENSE_RANK`) e mitigou rate limit do Imgur (`no-referrer` + fallback).
 
 ---
 
@@ -35,6 +35,10 @@ Todas as vulnerabilidades documentadas na fase 2 foram mitigadas via migration R
 | **S04** | 🟠 Alto | ✅ Resolvida | `admin-update-house` valida admin server-side |
 | **S13** | 🟡 Médio | ✅ Resolvida | Allowlist Imgur em `validation.ts` + `images.ts` |
 | **E-S10/E-S11** | 🟡 Médio | ✅ Resolvida | `get-contest-phase` calcula fase no servidor; UI não confia no relógio do browser |
+| **B03** | 🔴 Crítico | ✅ Resolvida | `upsert-house` reabre `pending` se casa `approved` alterar campos vitais |
+| **B04** | 🔴 Crítico | ✅ Resolvida | `cast-vote` usa `validated_character` do banco, ignora payload |
+| **B05** | 🟠 Alto | ✅ Resolvida | `house_leaderboard` com `DENSE_RANK()` para empates de utilidade |
+| **B06** | 🟡 Médio | ✅ Resolvida | `<meta referrer="no-referrer">` + `ImageWithFallback` com `onError` robusto |
 
 ### Comportamentos seguros confirmados
 
@@ -48,19 +52,21 @@ Todas as vulnerabilidades documentadas na fase 2 foram mitigadas via migration R
 
 ---
 
-## Testes unitários — `tests/unit/` (32/32 ✅)
+## Testes unitários — `tests/unit/` (40/40 ✅)
 
-Inclui fase 1 (U01–U11, S01/S03/S04) + fase 2:
+Inclui fase 1 (U01–U11, S01/S03/S04) + fase 2 + fase 3:
 
 | Arquivo | IDs | Testes |
 |---------|-----|--------|
 | `vote-abuse.test.ts` | S06, S09 | 2 |
 | `time-bypass.test.ts` | S10, S11 | 2 |
 | `image-security.test.ts` | S12, S13 | 4 |
+| `house-guards.test.ts` | B03 | 5 |
+| `scoring.test.ts` | B05 (DENSE_RANK) | +2 |
 
 ---
 
-## Testes de segurança — `tests/security/` (26/26 ✅)
+## Testes de segurança — `tests/security/` (30/30 ✅)
 
 | Arquivo | Cenários | Resultado |
 |---------|----------|-----------|
@@ -70,7 +76,7 @@ Inclui fase 1 (U01–U11, S01/S03/S04) + fase 2:
 | `time-bypass.integration.test.ts` | S10, S11 | ✅ |
 | `rls-votes.integration.test.ts` | S14–S16 | ✅ |
 | `rls-users.integration.test.ts` | S17, S18 | ✅ |
-| `edge-functions.test.ts` | S05 + novas funções | ✅ |
+| `edge-functions.test.ts` | S05 + B03/B04 (estático) | ✅ |
 
 **Probes:** `tests/security/probes/s02, s06–s18-probe.mjs` — todos exit 0
 
@@ -93,9 +99,9 @@ Inclui fase 1 (U01–U11, S01/S03/S04) + fase 2:
 ## Comandos
 
 ```bash
-npm run test:unit          # 32 testes
-npm run test:security      # 26 testes
-npm run test:e2e           # 17 testes
+npm run test:unit          # 40 testes
+npm run test:security      # 30 testes
+npm run test:e2e           # 18 testes
 npm run test:all           # suíte completa
 
 # Probe individual
@@ -110,7 +116,8 @@ node tests/security/probes/s14-votes-select-all.mjs
 | Item | Status |
 |------|--------|
 | Migration `20260617120000_security_hardening.sql` | ✅ Aplicada |
-| Edge Functions (6 novas/atualizadas) | ✅ Deployadas |
+| Migration `20260618100000_leaderboard_dense_rank.sql` | ✅ Aplicar em produção |
+| Edge Functions `upsert-house`, `cast-vote` (Fase 3) | ✅ Redeploy após push |
 | `get-contest-phase` | ✅ Fase calculada no servidor |
 | Secret `CONTEST_SESSION_SECRET` | ✅ Configurado pelo utilizador |
 
@@ -118,4 +125,4 @@ node tests/security/probes/s14-votes-select-all.mjs
 
 ## Conclusão
 
-A fase 3 fechou **8 vulnerabilidades RLS/API** críticas e altas, migrou escritas para Edge Functions com token de sessão HMAC, e expandiu a suíte para **75 testes** sem falhas. O bypass de fase via manipulação de relógio no browser permanece possível na UI, mas a API rejeita operações fora da fase correta.
+A fase 3 fechou **golpes de negócio** (bait-and-switch em casas aprovadas, voto fantasma via personagem forjado), corrigiu **empates no ranking** com `DENSE_RANK`, e mitigou **rate limit do Imgur** no frontend. A suíte totaliza **88 testes** sem falhas.

@@ -91,7 +91,10 @@ export function ImageWithFallback({
       onClick={() => {
         if (display_src && on_click) on_click(display_src)
       }}
-      onError={() => set_errored(true)}
+      onError={() => {
+        set_display_src(null)
+        set_errored(true)
+      }}
     />
   )
 }

@@ -43,6 +43,19 @@ describe('S05 — edge functions do projeto', () => {
     expect(source).not.toMatch(/auth\?\.startsWith\("Bearer "\) \? auth\.slice\(7\) : header_token/)
   })
 
+  it('cast-vote usa validated_character do banco, não do payload', () => {
+    const source = readFileSync(join(FUNCTIONS_DIR, 'cast-vote/index.ts'), 'utf8')
+    expect(source).toMatch(/contest_users/)
+    expect(source).toMatch(/validated_character/)
+    expect(source).not.toMatch(/body\.voter_character/)
+  })
+
+  it('upsert-house reabre pending em bait-and-switch de casa aprovada', () => {
+    const source = readFileSync(join(FUNCTIONS_DIR, 'upsert-house/index.ts'), 'utf8')
+    expect(source).toMatch(/should_reset_approved_to_pending/)
+    expect(source).toMatch(/house-guards/)
+  })
+
   it('lista todas as edge functions do projeto', () => {
     const names = readdirSync(FUNCTIONS_DIR, { withFileTypes: true })
       .filter((d) => d.isDirectory() && d.name !== '_shared')

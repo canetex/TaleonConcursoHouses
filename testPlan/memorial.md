@@ -160,14 +160,14 @@ Base path: `/TaleonConcursoHouses/` (GitHub Pages).
 3. Preenche andar, nome customizado, tema, contagem dummies/hirelings (0–20).
 4. URLs Imgur resolvidas via `resolve-image-url` (álbum → link direto).
 5. Coordenadas do mapa obtidas via `house-wiki-coords` (scrape Tibia Wiki BR).
-6. Submissão via `upsert-house` (cria ou atualiza; rejeitadas voltam a `pending`).
+6. Submissão via `upsert-house` (cria ou atualiza; rejeitadas voltam a `pending`; **aprovadas voltam a `pending` se alterarem personagem, casa ou screenshots** — anti bait-and-switch).
 
 ### 5.4 Votação (`VotePage`)
 
-1. Confirma personagem votante no Taleon San.
+1. Confirma personagem votante no Taleon San e persiste em `contest_users.validated_character` via `update-profile`.
 2. Lista casas `approved` ordenadas por `created_at`.
 3. Interface `SwipeCard` (react-swipeable): `match` ou `dislike`.
-4. Voto enviado via `cast-vote`; histórico via `get-my-votes`.
+4. Voto enviado via `cast-vote` (personagem lido **do banco**, não do payload); histórico via `get-my-votes`.
 
 ### 5.5 Admin (`AdminPage` em `RankingPage.tsx`)
 
@@ -179,7 +179,7 @@ Base path: `/TaleonConcursoHouses/` (GitHub Pages).
 
 - **Home:** carrossel `HouseCarousel` → `HouseShowcaseCard` (galeria, lightbox, partilhar, minimapa).
 - **Detalhe:** `/house/:id` reutiliza `HouseShowcaseCard`.
-- **Imagens:** `ImageWithFallback` + `HouseImagePlaceholder` (blur Tibia quando sem screenshot).
+- **Imagens:** `ImageWithFallback` + `HouseImagePlaceholder` (blur Tibia quando sem screenshot ou falha de carregamento); `<meta name="referrer" content="no-referrer">` mitiga bloqueio/hotlink do Imgur.
 - **Mapa:** preview estático por andar (`tibiamaps.github.io/tibia-map-data`) com marcador; links externos para TibiaMaps e Tibia Wiki.
 
 ---
@@ -243,7 +243,7 @@ Correção crítica em `_shared/session.ts`: o header `Authorization: Bearer <an
 
 #### `house_votes`
 - `vote_type`: `match` | `dislike`.
-- `voter_character` (validado na UI, não revalidado server-side em cada voto).
+- `voter_character` — preenchido server-side a partir de `contest_users.validated_character` (Fase 3).
 
 #### `contest_config`
 - Pares chave/valor: datas do concurso, `admin_discord_ids`, credenciais Discord (opcional).
@@ -413,6 +413,7 @@ Sessão injetada em `localStorage` (`taleon_discord_session`) via `inject_discor
 |----|-----------|
 | S02, S15, S18 | REVOKE + Edge Functions |
 | S08–S11 | Validação fase/status em `cast-vote` / `upsert-house` |
+| B03–B06 | Fase 3: bait-and-switch, voto fantasma, DENSE_RANK, Imgur referrer |
 | S09 | CHECK 0–20 + validação server |
 | S04 | Admin server-side |
 | S13/E-S12 | Allowlist Imgur; sem SVG; sem execução de script |
@@ -429,7 +430,6 @@ Documentação detalhada: `testPlan/status-dos-testes.md`, `testPlan/backlog.md`
 | Item | Severidade | Descrição |
 |------|------------|-----------|
 | Inscrições legadas | Média | Casas criadas antes dos campos wiki podem ter `house_city`/`house_tibia_name` NULL; edição exige re-seleção no formulário |
-| Validação `voter_character` | Baixa | Personagem do votante validado só na UI, não revalidado a cada `cast-vote` |
 | Bypass UI de fase | Baixa | Relógio do browser pode mostrar formulários; API bloqueia |
 | Sem upload de imagens | Info | Dependência total do Imgur; sem verificação de tamanho real do ficheiro |
 | Rate limit em memória | Baixa | `_shared/rate-limit.ts` não persiste entre instâncias Edge |
@@ -442,7 +442,8 @@ Documentação detalhada: `testPlan/status-dos-testes.md`, `testPlan/backlog.md`
 
 | Commit | Descrição |
 |--------|-----------|
-| `b2b8d43` | Logo circular, blur suave, mapa estático |
+| `db53d66` | Logo header reposicionada |
+| `b765b8e` | Logo selo, regras em abas, zoom minimap, ocultar rejeitadas |
 | `9f36fdd` | Identidade visual, logo, favicon, placeholder, fix sessão |
 | `8a3ac1b` | Carrossel detalhado, catálogo 1097 casas |
 | `a52509a` | Login único OAuth, fase via servidor |
