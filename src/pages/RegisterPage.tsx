@@ -507,6 +507,11 @@ export function RegisterPage() {
           </div>
         </div>
 
+        <p className="text-xs text-amber-200/50 -mt-2">
+          Quantos estão disponíveis para uso na casa? Não precisam estar no mesmo andar que está
+          concorrendo na decoração.
+        </p>
+
         <div>
           <label className="block text-sm text-amber-200/70 mb-1">URLs de Screenshots *</label>
           <p className="text-xs text-amber-200/40 mb-2">
