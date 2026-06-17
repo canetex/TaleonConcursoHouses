@@ -13,7 +13,7 @@ describe('S10/S11 — validação de fases só no frontend', () => {
   it('S10: can_register retorna false fora da janela — mas Supabase não replica esta regra', () => {
     const phase = get_current_phase(ended_dates, new Date('2025-01-01T00:00:00Z'))
     expect(phase).toBe('ended')
-    expect(can_register(phase)).toBe(false)
+    expect(can_register('ended', ended_dates, new Date('2025-01-01T00:00:00Z'))).toBe(false)
   })
 
   it('S11: can_vote retorna false fora da votação — backend não tem equivalente', () => {

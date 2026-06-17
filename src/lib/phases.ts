@@ -6,14 +6,21 @@ export function get_current_phase(dates: ContestDates, now = new Date()): Contes
   const validation_end = new Date(dates.validation_end)
   const voting_end = new Date(dates.voting_end)
 
-  if (now < registration_start) return 'registration'
+  if (now < registration_start) return 'scheduled'
   if (now < registration_end) return 'registration'
   if (now < validation_end) return 'validation'
   if (now < voting_end) return 'voting'
   return 'ended'
 }
 
+export function is_registration_window_open(dates: ContestDates, now = new Date()): boolean {
+  const registration_start = new Date(dates.registration_start)
+  const registration_end = new Date(dates.registration_end)
+  return now >= registration_start && now < registration_end
+}
+
 export const phase_labels: Record<ContestPhase, string> = {
+  scheduled: 'Inscrições em Breve',
   registration: 'Inscrições Abertas',
   validation: 'Validação de Pagamentos',
   voting: 'Votação Aberta',
@@ -21,14 +28,20 @@ export const phase_labels: Record<ContestPhase, string> = {
 }
 
 export const phase_descriptions: Record<ContestPhase, string> = {
+  scheduled: 'As inscrições abrem em breve. Prepare a sua casa e fique atento ao cronograma!',
   registration: 'Inscreva a sua casa decorada! A votação ainda não está disponível.',
   validation: 'Inscrições encerradas. A organização está a validar os pagamentos das taxas.',
   voting: 'Deslize para votar nas casas aprovadas! A votação é 100% gratuita.',
   ended: 'O concurso terminou. Consulte o ranking final.',
 }
 
-export function can_register(phase: ContestPhase): boolean {
-  return phase === 'registration'
+export function can_register(
+  phase: ContestPhase,
+  dates?: ContestDates | null,
+  now = new Date(),
+): boolean {
+  if (phase !== 'registration' || !dates) return false
+  return is_registration_window_open(dates, now)
 }
 
 export function can_vote(phase: ContestPhase): boolean {

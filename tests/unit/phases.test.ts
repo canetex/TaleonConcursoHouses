@@ -17,8 +17,15 @@ describe('phases', () => {
   it('U01: período de inscrição permite registo', () => {
     const now = new Date('2026-06-15T12:00:00Z')
     expect(get_current_phase(dates, now)).toBe('registration')
-    expect(can_register('registration')).toBe(true)
+    expect(can_register('registration', dates, now)).toBe(true)
     expect(can_vote('registration')).toBe(false)
+  })
+
+  it('fase scheduled bloqueia inscrição antes da abertura', () => {
+    const now = new Date('2026-05-15T12:00:00Z')
+    expect(get_current_phase(dates, now)).toBe('scheduled')
+    expect(can_register('scheduled', dates, now)).toBe(false)
+    expect(can_register('registration', dates, now)).toBe(false)
   })
 
   it('U02: período de votação permite votar', () => {

@@ -1,6 +1,6 @@
 export type HouseStatus = 'pending' | 'approved' | 'rejected'
 export type VoteType = 'match' | 'dislike'
-export type ContestPhase = 'registration' | 'validation' | 'voting' | 'ended'
+export type ContestPhase = 'scheduled' | 'registration' | 'validation' | 'voting' | 'ended'
 
 export interface ContestUser {
   id: string

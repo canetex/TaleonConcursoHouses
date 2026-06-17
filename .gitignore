@@ -36,3 +36,6 @@ playwright-report/
 coverage/
 .edge-deploy/
 .tmp-*.json
+
+#AI Files — artefatos gerados
+markdowns/*

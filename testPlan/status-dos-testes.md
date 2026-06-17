@@ -116,8 +116,8 @@ node tests/security/probes/s14-votes-select-all.mjs
 | Item | Status |
 |------|--------|
 | Migration `20260617120000_security_hardening.sql` | ✅ Aplicada |
-| Migration `20260618100000_leaderboard_dense_rank.sql` | ✅ Aplicar em produção |
-| Edge Functions `upsert-house`, `cast-vote` (Fase 3) | ✅ Redeploy após push |
+| Migration `20260618100000_leaderboard_dense_rank.sql` | ✅ Aplicada |
+| Edge Functions `upsert-house`, `cast-vote` (Fase 3) | ✅ v4 deployadas |
 | `get-contest-phase` | ✅ Fase calculada no servidor |
 | Secret `CONTEST_SESSION_SECRET` | ✅ Configurado pelo utilizador |
 

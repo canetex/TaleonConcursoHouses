@@ -66,7 +66,7 @@ function house_to_form(house: House): HouseRegistrationForm {
 
 export function RegisterPage() {
   const { is_authenticated, discord_id } = useAuth()
-  const { phase } = usePhase()
+  const { phase, dates } = usePhase()
   const navigate = useNavigate()
 
   const [form, set_form] = useState<HouseRegistrationForm>(empty_form)
@@ -129,8 +129,12 @@ export function RegisterPage() {
       return
     }
 
-    if (!can_register(phase)) {
-      set_error('O período de inscrições está encerrado.')
+    if (!can_register(phase, dates)) {
+      set_error(
+        phase === 'scheduled'
+          ? 'As inscrições ainda não abriram. Consulte o cronograma nas regras.'
+          : 'O período de inscrições está encerrado.',
+      )
       return
     }
 
@@ -247,8 +251,8 @@ export function RegisterPage() {
     return <div className="text-center py-16 text-amber-200/50">A carregar inscrição...</div>
   }
 
-  if (!can_register(phase)) {
-    if (existing_house) {
+  if (!can_register(phase, dates)) {
+    if (existing_house && phase !== 'scheduled') {
       return (
         <div className="max-w-lg mx-auto px-4 py-16 text-center">
           <p className="text-4xl mb-4">📋</p>
@@ -262,6 +266,32 @@ export function RegisterPage() {
             className="inline-block px-6 py-3 rounded-xl bg-tibia-gold text-tibia-dark font-medium hover:bg-amber-400"
           >
             Ver minha casa
+          </Link>
+        </div>
+      )
+    }
+
+    if (phase === 'scheduled') {
+      return (
+        <div className="max-w-lg mx-auto px-4 py-16 text-center">
+          <p className="text-4xl mb-4">⏳</p>
+          <p className="text-amber-200/70 mb-2">As inscrições abrem em breve.</p>
+          {dates && (
+            <p className="text-sm text-amber-200/50 mb-6">
+              Abertura:{' '}
+              {new Date(dates.registration_start).toLocaleString('pt-BR', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZone: 'America/Sao_Paulo',
+              })}{' '}
+              (horário de Brasília)
+            </p>
+          )}
+          <Link to="/regras" className="text-tibia-gold hover:underline text-sm">
+            Ver cronograma completo →
           </Link>
         </div>
       )

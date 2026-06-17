@@ -7,6 +7,7 @@ const functions = [
   'cast-vote',
   'get-my-votes',
   'admin-update-house',
+  'get-contest-phase',
 ]
 
 const root_dir = join(process.cwd(), 'supabase', 'functions')

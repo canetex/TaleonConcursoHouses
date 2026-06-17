@@ -7,7 +7,7 @@ export interface ContestDates {
   voting_end: string;
 }
 
-export type ContestPhase = "registration" | "validation" | "voting" | "ended";
+export type ContestPhase = "scheduled" | "registration" | "validation" | "voting" | "ended";
 
 export async function load_contest_dates(supabase: SupabaseClient): Promise<ContestDates | null> {
   const { data, error } = await supabase.from("contest_config").select("key, value");
@@ -30,7 +30,7 @@ export function get_current_phase(dates: ContestDates, now = new Date()): Contes
   const validation_end = new Date(dates.validation_end);
   const voting_end = new Date(dates.voting_end);
 
-  if (now < registration_start) return "registration";
+  if (now < registration_start) return "scheduled";
   if (now < registration_end) return "registration";
   if (now < validation_end) return "validation";
   if (now < voting_end) return "voting";
@@ -40,7 +40,15 @@ export function get_current_phase(dates: ContestDates, now = new Date()): Contes
 export async function assert_registration_open(supabase: SupabaseClient): Promise<void> {
   const dates = await load_contest_dates(supabase);
   if (!dates) throw new Error("Configuração do concurso indisponível");
-  if (get_current_phase(dates) !== "registration") {
+
+  const now = new Date();
+  const registration_start = new Date(dates.registration_start);
+  const registration_end = new Date(dates.registration_end);
+
+  if (now < registration_start) {
+    throw new Error("O período de inscrições ainda não abriu");
+  }
+  if (now >= registration_end) {
     throw new Error("O período de inscrições está encerrado");
   }
 }
